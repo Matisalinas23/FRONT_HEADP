@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* GRAYSCALE */
+  --background: #1e1e1e;
+  --foreground: #ffffff;
+  --darkgray: #2D2D2D;
+  --gray: #3c3c3c;
+  --lightgray: #4b4b4b;
+  --lightgray2: #9c9c9c;
+  --white: #d9d9d9;
+
+  /* GREENSCALE*/
+  --darkgreen: #1F9D00;
+  --green: #5CC442;
+  --lightgreen: #93E27F;
+
+  --red: #C42B2B;
+  --lightred: #c44c4c; 
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--white);
+  font-weight: 200;
+}
+
+option:hover {
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+select {
+  border-color: var(--green)
+}
+
+select:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: var(--green);
+}
+
+option {
+  background-color: var(--background);
+}
+
+textarea {
+  resize: none
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Ancho del scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+
+/* Color de la parte arrastrable */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--darkgreen), var(--lightgreen));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+/* Color del contenedor */
+::-webkit-scrollbar-track {
+  background-color: var(--gray); /* gris */
+  border-radius: 9999px;
 }

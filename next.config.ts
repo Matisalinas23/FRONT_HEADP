@@ -1,7 +1,17 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  webpack(config: any) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
+    return config;
+  },
+  images: {
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'res.cloudinary.com'
+    }]
+  }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
