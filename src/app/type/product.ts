@@ -9,5 +9,5 @@ export interface IProduct {
     stock: number
     quantity: number
     categories: ICategory[]
-    image: IImage
+    image: IImage | null
 }

@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import LeftArrowIcon from "@/svg/left-arrow-svgrepo-com.svg"
 import RightArrowIcon from "@/svg/right-arrow-svgrepo-com.svg"
-import { IProduct } from '../type/product';
 import { useProducts } from '../hooks/useProducts';
 import ProductCardCarrousel from './ProductCardCarrousel';
-import { authStore } from '../store/authStore';
 import productStore from '../store/productStore';
 
 export default function Carrousel() {
@@ -13,11 +11,6 @@ export default function Carrousel() {
 
   // stores
   const products = productStore((state) => state.products)
-
-  useEffect(() => {
-    getProducts()
-  },[])
-
 
   // Scrolling logic
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -35,6 +28,7 @@ export default function Carrousel() {
 
   // Vertical scroll to horizontal on the carrousel
   useEffect(() => {
+    getProducts()
     const el = scrollRef.current;
     if (!el) return;
 

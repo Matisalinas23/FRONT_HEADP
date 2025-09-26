@@ -2,6 +2,6 @@ export {}
 
 declare global {
     interface Window {
-        MercadoPago?: any
+        MercadoPago?: typeof import('mercadopago')
     }
 }

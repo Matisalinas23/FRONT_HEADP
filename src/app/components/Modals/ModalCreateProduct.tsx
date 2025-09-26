@@ -1,10 +1,8 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import AcceptButton from "../AcceptButton";
 import CancelButton from "../CancelButton";
-import { useFormik } from "formik";
+import { FormikProps, useFormik } from "formik";
 import * as Yup from "yup"
 import { ICategory } from "../../type/category";
-import Image from "next/image";
 import { createProductHttp } from "../../http/productsHttp";
 import ImageSelector from "../ImageSelector";
 import CategoryList from "../CategoryList";
@@ -15,12 +13,11 @@ type CreateProductProps = {
   getProducts: () => {}
 }
 
-// Types for 'initualValues' from 'const formik'
-interface IFormValues {
+export interface IFormValues {
   name: string
   description: string
-  price: string
-  stock: string
+  price: number
+  stock: number
   categories: number[]
   image: File | null
 }
@@ -29,12 +26,12 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
 
   const inputStyle = "bg-[var(--lightgray)] pl-2 h-7"
 
-  const formik = useFormik<IFormValues>({
+  const formik: FormikProps<IFormValues> = useFormik<IFormValues>({
     initialValues: {
         name: "",
         description: "",
-        price: "",
-        stock: "",
+        price: 0,
+        stock: 1,
         categories: [],
         image: null,
     },
@@ -61,8 +58,8 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
 
       formData.append("name", values.name)
       formData.append("description", values.description)
-      formData.append("price", values.price)
-      formData.append("stock", values.stock)
+      formData.append("price", String(values.price))
+      formData.append("stock", String(values.stock))
       formData.append("categories", JSON.stringify(myCategories))
       formData.append("image", values.image)
       

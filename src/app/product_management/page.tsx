@@ -42,9 +42,6 @@ export default function ProductManagement() {
   useEffect(() => {
     getProducts()
     console.log(products)
-  }, [])
-
-  useEffect(() => {
     getCategories()
     console.log(categories)
   }, [products])

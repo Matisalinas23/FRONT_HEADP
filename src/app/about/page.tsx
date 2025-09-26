@@ -8,7 +8,7 @@ const inter = Inter({
   subsets: ["latin"]
 })
 
-export default function page() {
+export default function AboutPage() {
   const [option, setOption] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [privacyPolitics, setPrivacyPolitics] = useState<string>('')

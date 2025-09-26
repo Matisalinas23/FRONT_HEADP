@@ -1,16 +1,16 @@
-import { useFormik } from "formik"
+import { FormikProps, useFormik } from "formik"
 import { IProduct } from "../../type/product"
 import * as Yup from 'yup'
 import CancelButton from "../CancelButton"
 import AcceptButton from "../AcceptButton"
 import { updateCategoriesHttp, updateImageProductHttp, updateProductHttp } from "@/app/http/productsHttp"
 import ImageSelector from "../ImageSelector"
-
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { ICategory } from "@/app/type/category"
 import { getCategoriesHttp } from "@/app/http/categoriesHttp"
 import CatList from "../CategoryList"
+import { IFormValues } from "./ModalCreateProduct"
 
 type ModalUpdateProductProps = {
     product: IProduct
@@ -35,14 +35,14 @@ export default function ModalUpdateProduct({ product, setUpdateProduct, getProdu
     getCategories()
   }, [])
 
-  const formik = useFormik({
+  const formik: FormikProps<IFormValues> = useFormik<IFormValues>({
     initialValues: {
       name: product.name,
       stock: product.stock,
       price: product.price,
       description: product.description,
       image: null,
-      categories: product.categories.map(c => c.id) || []
+      categories: product.categories.map(c => c.id!) || []
     },
     validationSchema: Yup.object({
       name: Yup.string().required('El nombre es obligatorio'),
@@ -67,7 +67,7 @@ export default function ModalUpdateProduct({ product, setUpdateProduct, getProdu
         return;
       }
 
-      let myCategories: ICategory[] = [] // save categories that are selected in the form
+      const myCategories: ICategory[] = [] // save categories that are selected in the form
 
       // compares categoriesd id saved with real categories in 'myCategories'
       values.categories.forEach(cat => {

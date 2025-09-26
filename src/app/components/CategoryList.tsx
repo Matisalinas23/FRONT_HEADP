@@ -1,9 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { ICategory } from '../type/category'
+import { FormikProps } from 'formik'
+import { IFormValues } from './Modals/ModalCreateProduct'
 
 type CatListProps = {
     categories: ICategory[]
-    formik: any
+    formik: FormikProps<IFormValues>
 }
 
 export default function CategoryList({ categories, formik }: CatListProps) {
@@ -28,7 +30,7 @@ export default function CategoryList({ categories, formik }: CatListProps) {
                 <div key={category.id} className="">
                     <label>
                         <input type="checkbox" name='categories' value={category.id} onChange={handleChange}
-                        className='' checked={formik.values.categories.includes(category.id)}
+                        checked={formik.values.categories.includes(category.id!)}
                         />
                         {category.name}
                     </label>

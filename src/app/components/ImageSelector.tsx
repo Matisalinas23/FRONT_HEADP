@@ -1,8 +1,10 @@
+import { FormikProps } from 'formik';
 import Image from 'next/image';
 import React, { useState } from 'react'
+import { IFormValues } from './Modals/ModalCreateProduct';
 
 type ImageSelectorProps = {
-    formik: any
+    formik: FormikProps<IFormValues>
 }
 
 export default function ImageSelector({ formik }: ImageSelectorProps) {

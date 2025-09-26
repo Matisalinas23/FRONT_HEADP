@@ -11,27 +11,27 @@ type ModalCartProps = {
 export default function ModalCart({ logedUser }: ModalCartProps) {
     const [cartItems, setCartItems] = useState<ICartItem[]>([])
 
-    const getCartItems = async () => {
-        const cartitems: undefined | ICartItem[] = await getCartItemsHttp(logedUser.id!)
-        console.log(cartitems)
+    useEffect(() => {
+        const getCartItems = async () => {
+            const cartitems: undefined | ICartItem[] = await getCartItemsHttp(logedUser.id!)
+            console.log(cartitems)
 
-        if (!cartitems) {
-        console.log('cartitems: ', undefined)
-        return;
+            if (!cartitems) {
+            console.log('cartitems: ', undefined)
+            return;
+            }
+
+            setCartItems(cartitems)
         }
 
-        setCartItems(cartitems)
-    }
-
-    useEffect(() => {
-        console.log(cartItems)
+        console.log('cart items: ', cartItems)
         getCartItems()
     }, [])
 
   return (
     <div className="fixed inset-0 z-1 top-22 left-3/4 w-110 pl-6 pr-10 py-8 h-100 bg-[var(--darkgray)] overflow-y-auto">
         {cartItems.map((item) => (
-            <div className='h-16 mb-4 bg-[var(--background)] flex items-center rounded-r-[18px]'>
+            <div key={item.id} className='h-16 mb-4 bg-[var(--background)] flex items-center rounded-r-[18px]'>
                 <div className='flex w-3/4'>
                     <div className=' w-20 h-16 bg-white'>
                         <Image src={item.product.image.url} alt='product image' width={100} height={100}/>

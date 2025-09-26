@@ -20,7 +20,7 @@ export default function DetailsView({ product, setOpenDetails }: DetailsViewProp
 
                 <h3 className='mb-2'>Categorías</h3>
                 <div className='border-2 border-[var(--gray)] h-30 w-full grid grid-rows-3 grid-cols-3 gap-2 mb-4'>
-                    {product.categories.map((c) => (<p className='min-w-36 pt-1 text-sm text-center border-neutral-500'>{c.name}</p>))}
+                    {product.categories.map((c) => (<p key={c.id} className='min-w-36 pt-1 text-sm text-center border-neutral-500'>{c.name}</p>))}
                 </div>
 
                 <b>Precio: ${product.price}</b>

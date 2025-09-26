@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaRegMinusSquare, FaRegPlusSquare } from 'react-icons/fa'
 import CancelButton from '../CancelButton'
 import AcceptButton from '../AcceptButton'
@@ -39,7 +39,7 @@ export default function ModalAddToCart({ product, openModal }: ModalAddToCartPro
             if (values.quantity <= 0) {
                 console.log('no se envia nada')
             } else {
-                const cartitem = createCartItemHttp(values.quantity, logedUser.id!, product.id)
+                await createCartItemHttp(values.quantity, logedUser.id!, product.id)
             }
 
             openModal(false)

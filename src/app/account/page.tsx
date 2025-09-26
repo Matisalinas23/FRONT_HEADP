@@ -12,9 +12,8 @@ export default function AccountPage() {
   const [profileIcon, setProfileIcon] = useState<IProfileIcon | null | Partial<IProfileIcon>>(null)
   const [isEditProfile, setIsEditProfil] = useState<boolean>(false)
 
-  const { logedUser, setLogedUser } = authStore(useShallow((state) => ({
+  const { logedUser } = authStore(useShallow((state) => ({
     logedUser: state.logedUser,
-    setLogedUser: state.setLogedUser
   })))
 
 
@@ -36,11 +35,6 @@ export default function AccountPage() {
       setProfileIcon(userDatabase?.profileIcon)
     }
   }
-
-  useEffect(() => {
-    getProfileIcon()
-    console.log(logedUser)
-  }, [])
 
   useEffect(() => {
     getProfileIcon()

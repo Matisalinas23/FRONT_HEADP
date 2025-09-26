@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CancelButton from '../CancelButton'
 import AcceptButton from '../AcceptButton'
 import AddIcon from "@/svg/add-square-svgrepo-com.svg"

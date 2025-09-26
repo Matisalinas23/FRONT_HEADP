@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useCategories from '../hooks/useCategories'
 import productStore from '../store/productStore'
 import { useShallow } from 'zustand/shallow'
@@ -10,7 +10,7 @@ import ProductCardCarrousel from '../components/ProductCardCarrousel'
 import Sidebar from '../components/Sidebar'
 import { useSearchParams } from 'next/navigation'
 
-export default function page() {
+export default function ProductPage() {
   // stores (global states)
   const { products, setProducts } = productStore(useShallow((state) => ({
     products: state.products,
