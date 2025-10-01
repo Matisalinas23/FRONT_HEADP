@@ -10,7 +10,7 @@ import CategoryList from "../CategoryList";
 type CreateProductProps = {
   openModal: (el: boolean) => void
   categories: ICategory[]
-  getProducts: () => {}
+  getProducts: () => void
 }
 
 export interface IFormValues {
@@ -44,7 +44,7 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
         return;
       }
 
-      let myCategories: ICategory[] = [] // save categories that are selected in the form
+      const myCategories: ICategory[] = [] // save categories that are selected in the form
 
       // compares categoriesd id saved with real categories in 'myCategories'
       values.categories.forEach(cat => {

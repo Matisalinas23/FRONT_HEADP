@@ -1,4 +1,3 @@
-import React from 'react'
 import { getCategoriesHttp } from '../http/categoriesHttp'
 import { ICategory } from '../type/category'
 import categoryStore from '../store/categoryStore'

@@ -1,19 +1,7 @@
 import axios from "axios";
 import { ICartItem } from "../type/cartItem";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const NGROK_URL = process.env.NEXT_PUBLIC_NGROK_URL!;
-
-export const getCartItemsUrl = async (): Promise<string> => {
-  try {
-    await axios.get(NGROK_URL + '/cartItems');
-    return NGROK_URL + '/cartItems';
-  } catch (error) {
-    return API_URL + '/cartItems';
-  }
-};
-
-const CART_ITEMS_URL = await getCartItemsUrl()
+const CART_ITEMS_URL = process.env.NEXT_PUBLIC_API_URL + '/cartItems'
 
 
 export const createCartItemHttp = async (quantity: number, userId: number, productId: number): Promise<ICartItem | undefined> => {

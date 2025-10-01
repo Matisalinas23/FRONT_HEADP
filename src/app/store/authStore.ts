@@ -1,4 +1,3 @@
-import { IAddress } from "@/app/type/address"
 import { IUser } from "@/app/type/user"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"

@@ -14,7 +14,7 @@ export default function DetailsView({ product, setOpenDetails }: DetailsViewProp
             <div className='w-full h-full flex flex-col items-center'>
 
                 <div className='h-30 flex items-center gap-8 mb-4'>
-                    <Image src={product.image.url} alt='productImage' height={120} width={120} />
+                    {product.image && <Image src={product.image.url} alt='productImage' height={120} width={120} />}
                     <p className='max-h-full pr-4 overflow-y-auto'>{product.description}</p>
                 </div>
 

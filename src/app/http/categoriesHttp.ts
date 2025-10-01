@@ -1,19 +1,7 @@
 import axios from "axios"
 import { ICategory } from "../type/category"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const NGROK_URL = process.env.NEXT_PUBLIC_NGROK_URL!;
-
-export const getCategoriesUrl = async (): Promise<string> => {
-  try {
-    await axios.get(NGROK_URL + '/categories');
-    return NGROK_URL + '/categories';
-  } catch (error) {
-    return API_URL + '/categories';
-  }
-};
-
-const CATEGORIES_URL = await getCategoriesUrl()
+const CATEGORIES_URL = process.env.NEXT_PUBLIC_API_URL + '/categories'
 
 
 export const createCategoryHttp = async(body: ICategory): Promise<ICategory | undefined> => {

@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { getProductByIdHttp, getProductHttp, getProductsHttp } from "../http/productsHttp";
 import { IProduct } from "../type/product";
 import productStore from "../store/productStore";

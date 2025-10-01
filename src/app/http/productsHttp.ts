@@ -2,29 +2,13 @@ import axios from "axios"
 import { IProduct } from "../type/product"
 import { ICategory } from "../type/category"
 
-// Testing ngrok URL
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const NGROK_URL = process.env.NEXT_PUBLIC_NGROK_URL!;
-
-export const getProducstUrl = async (): Promise<string> => {
-  try {
-    await axios.get<IProduct[]>(NGROK_URL + '/products');
-    return NGROK_URL + '/products';
-  } catch (error) {
-    return API_URL + '/products';
-  }
-};
-
-const PRODUCT_URL = await getProducstUrl()
+const PRODUCT_URL = process.env.NEXT_PUBLIC_API_URL + '/products'
 
 console.log('producturl: ', PRODUCT_URL)
 
 export const getProductsHttp = async(): Promise<IProduct[] | undefined> => {
     try {
         const response = await axios.get<IProduct[]>(PRODUCT_URL)
-        console.log('Status:', response.status);          // debería ser 200
-        console.log('Headers:', response.headers);        // confirma que es application/json
-        console.log('Data:', response.data);             // esto debería ser tu array de productos
 
         return response.data;
     } catch (error) {

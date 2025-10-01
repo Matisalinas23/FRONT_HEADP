@@ -1,4 +1,4 @@
-import { addProfileIconHttp, updateUserHttp } from "../../http/userHttp";
+import { addProfileIconHttp } from "../../http/userHttp";
 import { authStore } from "../../store/authStore";
 import { IProfileIcon } from "../../type/profileIcon";
 import { IUser } from "../../type/user";

@@ -3,15 +3,20 @@
 import { useProducts } from '@/app/hooks/useProducts'
 import productStore from '@/app/store/productStore'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ModalAddToCart from '@/app/components/Modals/ModalAddToCart'
 import { authStore } from '@/app/store/authStore'
 import ModalBuyProduct from '@/app/components/Modals/ModalBuyProduct'
 import { MercadoPagoWallet } from '@/app/components/MpCheckouts'
 
-export default function BuyProduct({ params }: { params: { id: string } }) {
+export default function BuyProduct({ params }: { params: Promise<{ id: string }> }) {
+
+  const { id } = use(params)
+  console.log('params: ', params)
+
   // Local states
+  
   const [loading, setLoading] = useState<boolean>(true)
   const [isReceipt, setIsReceipt] = useState<boolean>(true)
   const [isModalAddToCart, setIsModalAddToCart] = useState<boolean>(false)
@@ -31,7 +36,7 @@ export default function BuyProduct({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchProduct = async () => {
       console.log('params: ', params)
-      await getProductById(params.id)
+      await getProductById(id)
       setLoading(false) // take off the load message
     }
 
@@ -53,7 +58,7 @@ export default function BuyProduct({ params }: { params: { id: string } }) {
     <div className='px-90 py-16'>
       <div className='min-h-86 w-fit flex items-center gap-12'>
         <div className='min-w-130 bg-white flex justify-center items-center'>
-          <Image src={product.image.url} alt='product image' width={340} height={340} />
+          {product.image && <Image src={product.image.url} alt='product image' width={340} height={340} />}
         </div>
 
         <div className='border max-w-190 min-h-80 h-fit bg-[var(--darkgray)] py-4 px-8'>
@@ -77,7 +82,7 @@ export default function BuyProduct({ params }: { params: { id: string } }) {
                 <p className='w-full flex'>Emitir recibo: <span className='ml-1'>{isReceipt ? 'Si' : 'No'}</span>
                 </p>
                 <p className='mb-4'>Stock disponible: {product.stock}</p>
-                <p>Llega en: {logedUser && countries.includes(logedUser.address!.country) ? '24-48 horas' : '48-96 horas'}</p>
+                <p>Llega en: {logedUser && logedUser.address && countries.includes(logedUser.address!.country) ? '24-48 horas' : '48-96 horas'}</p>
               </div>
               
               <button

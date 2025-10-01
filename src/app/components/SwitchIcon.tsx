@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ToggleLeft, ToggleRight } from "lucide-react";
 
 export default function SwitchIcon({ isReceipt, setIsReceipt }: { isReceipt: boolean, setIsReceipt: (boolean: boolean) => void}) {

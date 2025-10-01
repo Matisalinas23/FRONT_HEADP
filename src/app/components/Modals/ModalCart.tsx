@@ -34,7 +34,7 @@ export default function ModalCart({ logedUser }: ModalCartProps) {
             <div key={item.id} className='h-16 mb-4 bg-[var(--background)] flex items-center rounded-r-[18px]'>
                 <div className='flex w-3/4'>
                     <div className=' w-20 h-16 bg-white'>
-                        <Image src={item.product.image.url} alt='product image' width={100} height={100}/>
+                        {item.product.image && <Image src={item.product.image.url} alt='product image' width={100} height={100}/>}
                     </div>
                     <p key={item.id!} className='font-normal text-[17px] overflow-hidden w-70 mx-3 flex items-center'>{item.product.name}</p>
                 </div>

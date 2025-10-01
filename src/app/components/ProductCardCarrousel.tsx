@@ -17,7 +17,7 @@ export default function ProductCardCarrousel({ product }: Props) {
   return (
     <div className='w-60 duration-300 cursor-pointer hover:scale-103' onClick={handleGoToProduct}>
       <div className='flex h-60 bg-white items-center justify-center'>
-        <Image src={product.image.url} alt='card carrousel image' width={320} height={320} />
+        {product.image && <Image src={product.image.url} alt='card carrousel image' width={320} height={320} />}
       </div>
       <div className='h-40 w-full bg-[var(--gray)] rounded-b-4xl px-2 py-1'>
         <p className='overflow-y-hidden h-15 py-2 mb-2 font-semibold'>{product.name}</p>

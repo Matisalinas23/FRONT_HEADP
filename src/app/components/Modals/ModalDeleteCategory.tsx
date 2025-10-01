@@ -7,7 +7,7 @@ import { useFormik } from "formik"
 type DeleteCategoryProps = {
     openModal: (el: boolean) => void
     categories: ICategory[]
-    getCategories: () => {}
+    getCategories: () => void
 }
 
 export default function ModalDeleteCategory({ openModal, categories, getCategories }: DeleteCategoryProps) {

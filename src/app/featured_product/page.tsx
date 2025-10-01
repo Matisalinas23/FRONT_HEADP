@@ -1,15 +1,12 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import FeaturedProductsBanner from '../components/FeaturedProductsBanner'
 import FeaturedProductSpecifies from '../components/FeaturedProductSpecifies'
 import { useRouter } from 'next/navigation'
 
 export default function FeaturedProduct() {
-  const [isBuy, setIsBuy] = useState<boolean>(false)
-
-  const h2style = "font-light text-4xl text-[var(--darkgreen)] duration-300 cursor-pointer hover:scale-110 hover:text-[var(--green)]"
   const buttonStyle = 'border-2 w-100 h-14 text-[var(--darkgreen)] cursor-pointer ease-in-out duration-300 hover:scale-103 hover:bg-[var(--darkgreen)] hover:text-white hover:border-none hover:font-normal'
 
   const navigate = useRouter();

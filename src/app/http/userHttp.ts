@@ -1,19 +1,7 @@
 import axios from "axios"
 import { IUser } from "../type/user";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const NGROK_URL = process.env.NEXT_PUBLIC_NGROK_URL!;
-
-export const getUsersUrl = async (): Promise<string> => {
-  try {
-    await axios.get(NGROK_URL + '/users');
-    return NGROK_URL + '/users';
-  } catch (error) {
-    return API_URL + '/users';
-  }
-};
-
-const USER_URL = await getUsersUrl()
+const USER_URL = process.env.NEXT_PUBLIC_API_URL + '/users';
 
 
 export const getUsersHttp = async (): Promise<IUser[] | undefined> => {

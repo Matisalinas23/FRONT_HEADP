@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { ICategory } from '../type/category'
 import { IProduct } from '../type/product'
 import { getProductsByCategoriesHttp, getProductsByPriceRangeHttp } from '../http/productsHttp'
@@ -7,12 +7,10 @@ import { useFormik } from 'formik'
 type SidebarProps = {
     categories: ICategory[] | []
     setProducts: (products: IProduct[] | []) => void
-    products: IProduct[]
 }
 
-export default function Sidebar({ categories, setProducts, products }: SidebarProps) {
-    const [checkedCategoryIds, setCheckedCategoryIds] = useState<number[] | []>([])
-    const [filterType, setFilterType] = useState<string>('')
+export default function Sidebar({ categories, setProducts }: SidebarProps) {
+    const checkedCategoryIds: number[] = []
 
     async function handleCheck(e: ChangeEvent<HTMLInputElement>, categoryId: number) {
         const isChecked = e.target.checked

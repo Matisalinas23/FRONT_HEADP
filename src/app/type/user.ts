@@ -12,7 +12,7 @@ export interface IUser {
     password: string,
     dni: string,
     birthday: string,
-    type: Enum
+    type?: Enum
     address?: IAddress | null,
     profileIcon?: IProfileIcon | null | Partial<IUser>,
     purchaseOrders: IPurchaseOrder[]
