@@ -26,6 +26,7 @@ export const MercadoPagoWallet = ({ product }: Props) => {
             title: product.name,
             unit_price: product.price/10000,
             quantity: product.quantity,
+            productId: product.id,
           },
           { headers: { 'Content-Type': 'application/json' } }
         );
