@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IAddress } from "../type/address";
 
-const ADDRESS_URL = process.env.NEXT_PUBLIC_API_URL + '/address'
+const ADDRESS_URL = process.env.NEXT_PUBLIC_API_URL + '/address' || process.env.NEXT_LOCAL_API_URL + '/address'
 
 export const createAddressHttp = async (addressData: IAddress): Promise<IAddress | undefined> => {
     try {

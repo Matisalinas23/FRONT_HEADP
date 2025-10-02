@@ -5,7 +5,7 @@ interface AuthResponse {
     token: string;
 }
 
-const AUTH_URL = process.env.NEXT_PUBLIC_API_URL + '/auth';
+const AUTH_URL = process.env.NEXT_PUBLIC_API_URL + '/auth' || process.env.NEXT_LOCAL_API_URL + '/auth'
 
 console.log(AUTH_URL)
 

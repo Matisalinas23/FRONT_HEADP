@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ICartItem } from "../type/cartItem";
 
-const CART_ITEMS_URL = process.env.NEXT_PUBLIC_API_URL + '/cartItems'
+const CART_ITEMS_URL = process.env.NEXT_PUBLIC_API_URL + '/cartItems'  || process.env.NEXT_LOCAL_API_URL + '/cartItems'
 
 
 export const createCartItemHttp = async (quantity: number, userId: number, productId: number): Promise<ICartItem | undefined> => {

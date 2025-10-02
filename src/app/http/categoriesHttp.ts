@@ -1,7 +1,7 @@
 import axios from "axios"
 import { ICategory } from "../type/category"
 
-const CATEGORIES_URL = process.env.NEXT_PUBLIC_API_URL + '/categories'
+const CATEGORIES_URL = process.env.NEXT_PUBLIC_API_URL + '/categories'  || process.env.NEXT_LOCAL_API_URL + '/categories'
 
 
 export const createCategoryHttp = async(body: ICategory): Promise<ICategory | undefined> => {

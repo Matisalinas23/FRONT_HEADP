@@ -1,7 +1,7 @@
 import axios from "axios"
 import { IUser } from "../type/user";
 
-const USER_URL = process.env.NEXT_PUBLIC_API_URL + '/users';
+const USER_URL = process.env.NEXT_PUBLIC_API_URL + '/users'  || process.env.NEXT_LOCAL_API_URL + '/users'
 
 
 export const getUsersHttp = async (): Promise<IUser[] | undefined> => {
