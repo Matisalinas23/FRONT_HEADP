@@ -10,28 +10,29 @@ interface Props {
 export const MercadoPagoWallet = ({ product }: Props) => {
   const [preferenceId, setPreferenceId] = useState<string>('');
 
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
   const MP_PUBLIC_KEY = "APP_USR-1018779b-8ed3-44cb-8f0a-1a33c0bca908"
-  const createPreferenceIdEndpoint = `${BASE_URL}/mpCheckouts/createPreferenceId`;
-
+  
   useEffect(() => {
     initMercadoPago(MP_PUBLIC_KEY, { locale: 'es-AR' })
   }, []);
 
   const createPreferenceId = async () => {
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL;
+    const createPreferenceIdEndpoint = `${BASE_URL}/mpCheckouts/createPreferenceId`;
       try {
         const response = await axios.post(
           createPreferenceIdEndpoint,
           {
             title: product.name,
-            unit_price: product.price/10000,
+            unit_price: product.price/10000, // if price is 220000 its transform to 22
             quantity: product.quantity,
-            productId: product.id,
+            productId: product.id, // Product id is used to register the sale
+            stock: product.stock
           },
           { headers: { 'Content-Type': 'application/json' } }
         );
 
-        if (response?.data?.preferenceId) {
+        if (response.data.preferenceId) {
           console.log('PreferenceId generado:', response.data.preferenceId);
           setPreferenceId(response.data.preferenceId);
         } else {

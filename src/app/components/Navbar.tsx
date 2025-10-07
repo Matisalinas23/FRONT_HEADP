@@ -80,7 +80,7 @@ export default function Navbar() {
           <>
           <Link href="/"><h1 className="text-4xl font-bold text-[var(--darkgreen)]">HeadP Admin Page</h1></Link>
           <Link href="/product_management" className="text-[var(--green)]">Gestión de producto</Link>
-          <Link href="/records" className="text-[var(--green)]">Registros</Link>
+          <Link href="/logs" className="text-[var(--green)]">Registros</Link>
           </>
           :
           <>

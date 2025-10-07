@@ -35,7 +35,6 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
 
   useEffect(() => {
     const fetchProduct = async () => {
-      console.log('params: ', params)
       await getProductById(id)
       setLoading(false) // take off the load message
     }

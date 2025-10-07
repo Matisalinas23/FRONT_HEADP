@@ -1,5 +1,6 @@
 import { ICategory } from "./category"
 import { IImage } from "./image"
+import { ISale } from "./sale"
 
 export interface IProduct {
     id: number

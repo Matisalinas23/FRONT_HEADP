@@ -2,7 +2,8 @@ import axios from "axios"
 import { IProduct } from "../type/product"
 import { ICategory } from "../type/category"
 
-const PRODUCT_URL = process.env.NEXT_PUBLIC_API_URL + '/products'  || process.env.NEXT_LOCAL_API_URL + '/products'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
+const PRODUCT_URL = `${BASE_URL}/products`
 
 console.log('producturl: ', PRODUCT_URL)
 
