@@ -19,6 +19,7 @@ export const MercadoPagoWallet = ({ product }: Props) => {
   const createPreferenceId = async () => {
     const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL;
     const createPreferenceIdEndpoint = `${BASE_URL}/mpCheckouts/createPreferenceId`;
+    const token = '23'
       try {
         const response = await axios.post(
           createPreferenceIdEndpoint,
@@ -29,7 +30,10 @@ export const MercadoPagoWallet = ({ product }: Props) => {
             productId: product.id, // Product id is used to register the sale
             stock: product.stock
           },
-          { headers: { 'Content-Type': 'application/json' } }
+          { headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+           } }
         );
 
         if (response.data.preferenceId) {

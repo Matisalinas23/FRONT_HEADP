@@ -26,10 +26,9 @@ export default function Navbar() {
   const liStyle: string = "pl-4 hover:cursor-pointer"
   const divlaneStyle: string = "w-71 mt-4 mb-4 border-t-1 border-[var(--lightgray2)]"
   
-  const { logedUser, setLogedUser, token, setToken } = authStore(useShallow((state) => ({
+  const { logedUser, setLogedUser, setToken } = authStore(useShallow((state) => ({
     logedUser: state.logedUser,
     setLogedUser: state.setLogedUser,
-    token: state.token,
     setToken: state.setToken
   })))
   
@@ -41,6 +40,8 @@ export default function Navbar() {
   }
 
   const logOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('logedUser')
     setToken("")
     setLogedUser(null)
     setIsCart(false)

@@ -1,12 +1,20 @@
 import axios from "axios"
 import { IUser } from "../type/user";
+import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
 const USER_URL = `${BASE_URL}/users`
 
 export const getUsersHttp = async (): Promise<IUser[] | undefined> => {
+    const token = localStorage.getItem('token')
+
     try {
-        const users = await axios.get<IUser[]>(USER_URL)
+        if (!token) {
+            console.error("Token was not found in local storage")
+            throw new Error
+        }
+
+        const users = await axios.get<IUser[]>(USER_URL, { headers: { Authorization: `Bearer: ${token}` } })
         return users.data;
     } catch (error) {
         console.log("Error in 'getUserHttp'", error)
@@ -14,29 +22,29 @@ export const getUsersHttp = async (): Promise<IUser[] | undefined> => {
 }
 
 export const getUserByIdHttp = async (userId: number): Promise<IUser | undefined> => {
+    const token = localStorage.getItem('token')
+
     try {
-        const user = await axios.get<IUser>(`${USER_URL}/${userId}`)
+        if (!token) {
+            console.error("Token was not found in local storage")
+            throw new Error
+        }
+
+        const user = await axios.get<IUser>(`${USER_URL}/${userId}`, { headers: { Authorization: `Bearer: ${token}` } } )
+
         return user.data
     } catch (error) {
-        console.log("Error in 'getUserByIdHttp' ", error)
+        console.log(error)
     }
 }
 
 export const getUserByEmailHttp = async (email: string): Promise<IUser | undefined> => {
     try {
-        const allUsers = await getUsersHttp()
+        const response = await axios.get(`${USER_URL}/${email}`)
 
-        if (!allUsers) throw new Error("allUsers error in 'getUserByEmailHttp'")
-
-        //console.log(allUsers)
-        const user = allUsers.find((u) => u.email === email)
-
-        if (!user) throw new Error("user error in 'getUserByEmailHttp'")
-        
-        //console.log(user)
-        return user;
+        return response.data
     } catch (error) {
-        console.log("Error in 'getUserByIdHttp'", error)
+        console.error(error)
     }
 }
 

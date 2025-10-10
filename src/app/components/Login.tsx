@@ -29,9 +29,6 @@ export const Login: FC<LoginProps> = ({ openModal }) => {
             }
 
             openModal(false)
-            if (logedUser) {
-
-            }
         }
     })
 

@@ -4,13 +4,11 @@ import { useFormik } from "formik"
 import Image from "next/image"
 import * as Yup from "yup"
 import AcceptButton from "../components/AcceptButton"
-import { useUser } from "../hooks/useUser"
 import { useRouter } from "next/navigation"
 import { IUser } from "../type/user"
+import { registerUserHttp } from "../http/auth"
 
 export default function RegisterScreen() {
-  const { registerUser } = useUser()
-
   const navigate = useRouter()
 
   const formik = useFormik({
@@ -55,13 +53,15 @@ export default function RegisterScreen() {
         }
       }
 
-      console.log('user values: ', userValues)
-      const success = await registerUser(userValues)
+      const response = await registerUserHttp(userValues)
 
-      if (!success) {
+      if (!response) {
         alert("Hubo un problema al realizar el registro, intentalo mas tarde")
         return;
       }
+
+      localStorage.setItem('token', response.token)
+      localStorage.setItem('logedUser', String(response.userId))
 
       navigate.push('/')
     }
