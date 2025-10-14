@@ -4,7 +4,7 @@ import ProductPageClient from "./ProductPageClient"
 
 export default function Page() {
   return (
-    <Suspense fallback={<p>Cargando productos...</p>}>
+    <Suspense>
       <ProductPageClient />
     </Suspense>
   )

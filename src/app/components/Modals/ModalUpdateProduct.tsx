@@ -19,7 +19,7 @@ type ModalUpdateProductProps = {
 }
 
 export default function ModalUpdateProduct({ product, setUpdateProduct, getProducts }: ModalUpdateProductProps) {
-  const [categories, setCategories] = useState<ICategory[]>([]) // BD categories
+  const [categories, setCategories] = useState<ICategory[]>([])
 
   async function getCategories() {
     const data = await getCategoriesHttp()
@@ -58,13 +58,19 @@ export default function ModalUpdateProduct({ product, setUpdateProduct, getProdu
         description: values.description,
       }
 
-      console.log("product values", productValues)
+      if (productValues.name !== product.name ||
+        productValues.stock !== product.stock ||
+        productValues.price !== product.price ||
+        productValues.description !== product.description
+      ) {
+        const success = await updateProductHttp(productValues, product.id)
 
-      const success = await updateProductHttp(productValues, product.id)
-
-      if (!success) {
-        alert('Error al actualizar el producto')
-        return;
+        if (!success) {
+          alert('Error al actualizar el producto')
+          return;
+        }
+      } else {
+        console.log("Product values are the same (☞ﾟヮﾟ)☞")
       }
 
       const myCategories: ICategory[] = [] // save categories that are selected in the form
@@ -73,27 +79,34 @@ export default function ModalUpdateProduct({ product, setUpdateProduct, getProdu
       values.categories.forEach(cat => {
         const foundCategory = categories.find(c => c.id === cat)
         if (foundCategory) {
-          myCategories.push({name: foundCategory.name})
+          myCategories.push(foundCategory)
         } else {
           console.log("myCategories: ", myCategories)
         }
       })
 
-      console.log("array categories: ", myCategories)
-      const categorySuccess = await updateCategoriesHttp(myCategories, product.id)
+      if (myCategories !== product.categories) {
+        const categorySuccess = await updateCategoriesHttp(myCategories, product.id)
 
-      if (!categorySuccess) {
-        alert('Error al actualizar las categorias del producto')
+        if (!categorySuccess) {
+          alert('Error al actualizar las categorias del producto')
+          return
+        }
+      } else {
+        console.log("Categories are the same (☞ﾟヮﾟ)☞")
       }
 
-      if (values.image) {
+      if (values.image && values.image.name !== product.image?.name) {
         const formData = new FormData()
         formData.append('image', values.image)
         const successImage = await updateImageProductHttp(formData, product.id)
 
         if (!successImage) {
           alert('Error al actualizar la imagen del producto')
+          return
         }
+      } else {
+        console.log("Image is the same (☞ﾟヮﾟ)☞")
       }
 
       getProducts()

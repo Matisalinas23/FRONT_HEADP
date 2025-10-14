@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from "yup";
 import { useUser } from '../hooks/useUser';
-import { authStore } from '../store/authStore';
 
 type LoginProps = {
     openModal: (el: boolean) => void
@@ -10,7 +9,6 @@ type LoginProps = {
 
 export const Login: FC<LoginProps> = ({ openModal }) => {
     const { loginUser } = useUser()
-    const logedUser = authStore(state => state.logedUser)
 
     const formik = useFormik({
         initialValues: {
@@ -25,10 +23,12 @@ export const Login: FC<LoginProps> = ({ openModal }) => {
             const success = await loginUser(values.email, values.password)
 
             if (!success) {
-                alert("Hubo un problema al realizar el Login, intentalo ma tarde")
+                alert("Hubo un problema con la contraseña o el email.")
+                return
             }
 
             openModal(false)
+            window.location.reload()
         }
     })
 
@@ -55,7 +55,7 @@ export const Login: FC<LoginProps> = ({ openModal }) => {
         />
         <div className='flex gap-10 '>
             <button onClick={() => openModal(false)} className='hover:cursor-pointer'>Cancelar</button>
-            <button type='submit' className='hover:cursor-pointer'>Aceptar</button>
+            <button id='myButton' type='submit' className='hover:cursor-pointer'>Aceptar</button>
         </div>
     </form>
   )

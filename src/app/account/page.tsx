@@ -41,6 +41,22 @@ export default function AccountPage() {
     console.log(logedUser)
   }, [logedUser])
 
+  if (!logedUser) {
+    return (
+      <div className="h-[80vh] flex items-center justify-center">
+        <h2 className="text-[2rem] font-semibold text-neutral-500">No puedes acceder a esta página si no inicias sesión</h2>
+      </div>
+    )
+  }
+
+  if (logedUser && logedUser.type === 'ADMIN') {
+    return (
+      <div className="h-[80vh] flex items-center justify-center">
+        <h2 className="text-[2rem] font-semibold text-neutral-500">Debes iniciar sesión como cliente para ver esta página</h2>
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen px-88 pt-8">
       <div className="h-1/3 border-b-1 flex flex-col items-center gap-4">

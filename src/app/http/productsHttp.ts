@@ -79,7 +79,13 @@ export const createProductHttp = async(body: FormData): Promise<IProduct | undef
 
 export const updateProductHttp = async (body: Partial<IProduct>, productId: number): Promise<IProduct | undefined> => {
     try {
-        const updatedProduct = await axios.put<IProduct>(`${PRODUCT_URL}/${productId}`, body)
+        const token = localStorage.getItem('token')
+        
+        const updatedProduct = await axios.put<IProduct>(
+            `${PRODUCT_URL}/${productId}`,
+            body,
+            { headers: { Authorization: `Bearer: ${token}` } }
+        )
 
         return updatedProduct.data;
     } catch (error) {
@@ -89,7 +95,13 @@ export const updateProductHttp = async (body: Partial<IProduct>, productId: numb
 
 export const updateImageProductHttp = async (image: FormData, productId: number): Promise<IProduct | undefined> => {
     try {
-        const updatedProduct = await axios.put<IProduct>(`${PRODUCT_URL}/update_image/${productId}`, image)
+        const token = localStorage.getItem('token')
+
+        const updatedProduct = await axios.put<IProduct>(
+            `${PRODUCT_URL}/update_image/${productId}`,
+            image,
+            { headers: { Authorization: `Bearer: ${token}` } }
+        )
 
         return updatedProduct.data;
     } catch (error) {
@@ -99,7 +111,12 @@ export const updateImageProductHttp = async (image: FormData, productId: number)
 
 export const updateCategoriesHttp = async (categories: ICategory[], productId: number): Promise<IProduct | undefined> => {
     try {
-        const response = await axios.put<IProduct>(`${PRODUCT_URL}/update_categories/${productId}`, { categories})
+        const token = localStorage.getItem('token')
+        const response = await axios.put<IProduct>(
+            `${PRODUCT_URL}/update_categories/${productId}`,
+            { categories },
+            { headers: { Authorization: `Bearer: ${token}` } }
+        )
 
         return response.data;
     } catch (error) {

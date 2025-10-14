@@ -96,16 +96,17 @@ export default function Navbar() {
           </>
         }
 
-      <div className="flex w-1/2 justify-between">
+      <div className="flex w-1/2 justify-center">
         <Searchbar />
-        <div className="flex items-center gap-8 mr-4">
+      </div>
+
+      <div className="flex items-center gap-8 mr-4">
           { logedUser === null || logedUser && logedUser.type === "CLIENT" &&
             <CartiIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleCart} />
           }
           <UserIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleUserIcon}/>
           {logedUser && <LogoutIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={logOut}/>}
         </div>
-      </div>
     </nav>
 
     {isDropdown &&
@@ -123,7 +124,7 @@ export default function Navbar() {
     }
 
     {isCart && logedUser &&
-      <ModalCart logedUser={logedUser} />
+      <ModalCart logedUser={logedUser} closeModal={setIsCart} />
     }
     </div>
   )

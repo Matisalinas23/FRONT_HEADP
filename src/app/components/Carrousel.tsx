@@ -4,6 +4,7 @@ import RightArrowIcon from "@/svg/right-arrow-svgrepo-com.svg"
 import { useProducts } from '../hooks/useProducts';
 import ProductCardCarrousel from './ProductCardCarrousel';
 import productStore from '../store/productStore';
+import Loading from './Loading/Loading';
 
 export default function Carrousel() {
   // hooks
@@ -45,6 +46,12 @@ export default function Carrousel() {
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
+
+  if (products.length === 0) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <div className='h-110 px-20 relative w-full flex items-center'>

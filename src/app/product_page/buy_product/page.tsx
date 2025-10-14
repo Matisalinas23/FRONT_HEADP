@@ -9,11 +9,15 @@ import ModalAddToCart from '@/app/components/Modals/ModalAddToCart'
 import { authStore } from '@/app/store/authStore'
 import ModalBuyProduct from '@/app/components/Modals/ModalBuyProduct'
 import { MercadoPagoWallet } from '@/app/components/MpCheckouts'
+import Loading from '@/app/components/Loading/Loading'
+import { IProduct } from '@/app/type/product'
+import { getProductByIdHttp } from '@/app/http/productsHttp'
 
 export default function BuyProduct({ params }: { params: Promise<{ id: string }> }) {
+  const [product, setProduct] = useState<IProduct | undefined>(undefined)
 
   const { id } = use(params)
-  console.log('params: ', params)
+  console.log("prodid: ", params)
 
   // Local states
   
@@ -24,10 +28,8 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
 
   // global sates stores
   const logedUser = authStore(state => state.logedUser)
-  const product = productStore(state => state.product)
 
   // hooks
-  const { getProductById } = useProducts()
   const navigate = useRouter()
 
   const countries: string[] = ['bolivia' , 'paraguay' , 'uruguay' , 'brasil' , 'chile' , 'argentina']
@@ -35,7 +37,8 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
 
   useEffect(() => {
     const fetchProduct = async () => {
-      await getProductById(id)
+      const product = await getProductByIdHttp(id)
+      setProduct(product)
       setLoading(false) // take off the load message
     }
 
@@ -44,13 +47,23 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
 
   if (loading) {
     return (
-      <p>Carcando producto...</p>
+      <div className='h-[80vh]'>
+        <Loading />
+      </div>
     )
   }
 
   if (!product) {
-    navigate.push('/product_page')
+    navigate.push('/')
     return null
+  }
+
+  if (logedUser && logedUser.type === "ADMIN") {
+    return (
+      <div className='h-[80vh] flex items-center justify-center'>
+        <h1 className='text-neutral-500 text-[2.5rem] font-semibold'>No puedes acceder a esta página con una cuenta de administrador</h1>
+      </div>
+    )
   }
 
   return (

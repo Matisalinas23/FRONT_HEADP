@@ -38,9 +38,12 @@ export default function ModalAddToCart({ product, openModal }: ModalAddToCartPro
 
             if (values.quantity <= 0) {
                 console.log('no se envia nada')
-            } else {
-                await createCartItemHttp(values.quantity, logedUser.id!, product.id)
+                return
             }
+
+            console.log("Value: ", values.quantity)
+
+            await createCartItemHttp(values.quantity, logedUser.id!, product.id)
 
             openModal(false)
         }

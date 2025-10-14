@@ -35,7 +35,7 @@ export default function FeaturedProduct() {
         <div className='h-60 w-full bg-gradient-to-b from-[#232323] to-[#313131]'></div>
 
         <div className='h-140 w-full bg-[#313131] flex flex-col items-center pt-16'>
-          <button className={`${buttonStyle} mb-12`}><h2 className='text-2xl'>Ver Producto</h2></button>
+          <button className={`${buttonStyle} mb-12`} onClick={() => navigate.push('/product_page/4')}><h2 className='text-2xl'>Ir al Producto</h2></button>
           <button className={buttonStyle} onClick={() => navigate.push('/product_page')}><h2 className='text-2xl'>Otros Productos</h2></button>
         </div>
     </div>

@@ -9,6 +9,8 @@ import { getCategoriesHttp } from "../http/categoriesHttp"
 import ModalDeleteCategory from "../components/Modals/ModalDeleteCategory"
 import Product from "../components/Product"
 import ModalCreateProduct from "../components/Modals/ModalCreateProduct"
+import NoAdminScreen from "../components/NoAdminScreen"
+import Loading from "../components/Loading/Loading"
 
 export default function ProductManagement() {
   const [products, setProducts] = useState<IProduct[]>([])
@@ -16,6 +18,7 @@ export default function ProductManagement() {
   const [openCreateCategory, setOpenCreateCategory] = useState<boolean>(false)
   const [modalDeleteCategory, setModalDeleteCategory] = useState<boolean>(false)
   const [modalCreateProduct, setModalCreateProduct] = useState<boolean>(false)
+  const [isClient, setIsClient] = useState<boolean>(false)
 
   const getProducts = async () => {
     const products = await getProductsHttp()
@@ -40,11 +43,22 @@ export default function ProductManagement() {
   }
 
   useEffect(() => {
+    setIsClient(true)
     getProducts()
-    console.log(products)
     getCategories()
-    console.log(categories)
-  }, [products])
+  }, [])
+
+  if (isClient && !localStorage.getItem('token') && !localStorage.getItem('logedUser')) {
+    return (<NoAdminScreen />)
+  }
+
+  if (categories.length === 0 || products.length === 0) {
+    return (
+      <div className='h-[80vh]'>
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     <div className="py-16 flex justify-center gap-12">

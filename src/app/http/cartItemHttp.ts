@@ -6,8 +6,17 @@ const CART_ITEMS_URL = `${BASE_URL}/cartItems`
 
 export const createCartItemHttp = async (quantity: number, userId: number, productId: number): Promise<ICartItem | undefined> => {
     try {
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`,{ quantity: quantity })
-        const response = await axios.post(`${CART_ITEMS_URL}/${userId}/${productId}`, quantity)
+        const token = localStorage.getItem('token')
+        await axios.put(
+            `${BASE_URL}/products/${productId}`,
+            { quantity: quantity },
+            { headers: { Authorization: `Bearer: ${token}` } }
+        )
+        const response = await axios.post(
+            `${CART_ITEMS_URL}/${userId}/${productId}`,
+            quantity,
+            { headers: { Authorization: `Bearer: ${token}` } }
+        )
 
         return response.data;
     } catch (error) {
@@ -17,7 +26,11 @@ export const createCartItemHttp = async (quantity: number, userId: number, produ
 
 export const getCartItemsHttp = async (userId: number): Promise<ICartItem[] | undefined> => {
     try {
-        const response = await axios.get(`${CART_ITEMS_URL}/${userId}`)
+        const token = localStorage.getItem('token')
+        const response = await axios.get(
+            `${CART_ITEMS_URL}/${userId}`,
+            { headers: { Authorization: `Bearer: ${token}` }}
+        )
 
         return response.data;
     } catch (error) {

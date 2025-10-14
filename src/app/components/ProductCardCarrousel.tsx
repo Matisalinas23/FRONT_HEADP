@@ -11,7 +11,7 @@ export default function ProductCardCarrousel({ product }: Props) {
   const navigate = useRouter()
 
   const handleGoToProduct = () => {
-    navigate.push(`/product_page/${product.id}`)
+    navigate.push('/product_page/buy_product')
   }
 
   return (

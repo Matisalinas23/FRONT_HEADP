@@ -11,15 +11,15 @@ export const useUser = () => {
             const response: LoginResponse | undefined = await loginUserHttp(email, password)
 
             if (!response) {
-                console.error("Login was not successfully")
-                throw new Error
+                console.log("Login was not successfully")
+                return false
             }
 
             const user: IUser | undefined = await getUserByEmailHttp(email)
 
             if (!user) {
-                console.error("user was not found")
-                throw new Error
+                console.log("user was not found")
+                return false
             }
 
             setLogedUser(user)

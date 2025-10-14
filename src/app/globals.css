@@ -31,6 +31,10 @@ body {
   font-weight: 200;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 option:hover {
   cursor: pointer;
 }

@@ -9,6 +9,7 @@ import { useProducts } from "../hooks/useProducts"
 import ProductCardCarrousel from "../components/ProductCardCarrousel"
 import Sidebar from "../components/Sidebar"
 import { useSearchParams } from "next/navigation"
+import Loading from "../components/Loading/Loading"
 
 export default function ProductPageClient() {
   // stores (global states)
@@ -50,6 +51,14 @@ export default function ProductPageClient() {
   })
 
   console.log("filtered products: ", filteredProducts)
+
+  if (products.length === 0) {
+    return (
+      <div className='h-[80vh]'>
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     <div className="h-fit py-16 flex">
