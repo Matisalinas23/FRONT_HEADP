@@ -2,6 +2,7 @@ import React from 'react'
 import { IProduct } from '../type/product'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import productStore from '../store/productStore'
 
 type Props = {
     product: IProduct
@@ -9,9 +10,12 @@ type Props = {
 
 export default function ProductCardCarrousel({ product }: Props) {
   const navigate = useRouter()
+  
+  const setActiveProduct = productStore(state => state.setActiveProduct)
 
   const handleGoToProduct = () => {
-    navigate.push('/product_page/buy_product')
+    setActiveProduct(product)
+    navigate.push(`/product_page/buy_product/${product.id}`)
   }
 
   return (

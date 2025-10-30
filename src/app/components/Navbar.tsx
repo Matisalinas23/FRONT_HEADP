@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { authStore } from "../store/authStore";
 import { useShallow } from "zustand/shallow";
 import ModalCart from "./Modals/ModalCart";
+import Image from "next/image";
 
 export default function Navbar() {
   // Local states
@@ -87,10 +88,9 @@ export default function Navbar() {
           <>
           <Link href="/"><h1 className="text-4xl font-bold text-[var(--darkgreen)]">HeadP</h1></Link>
           <div className="flex items-center gap-12 text-sm">
-            <Link href="/product_page" className="text-[var(--green)]">GAMING</Link>
-            <Link href="/product_page" className="text-[var(--green)]">IN-EAR</Link>
-            <Link href="/product_page" className="text-[var(--green)]">ON-EAR</Link>
-            <Link href="/product_page" className="text-[var(--green)]">ACCESORIOS</Link>
+            <Link href={{ pathname: '/product_page', query: { category: 'gaming' } }} className="text-[var(--green)]">GAMING</Link>
+            <Link href={{ pathname: '/product_page', query: { category: 'IN-EAR' } }} className="text-[var(--green)]">IN-EAR</Link>
+            <Link href={{ pathname: '/product_page', query: { category: 'ON-EAR' } }} className="text-[var(--green)]">ON-EAR</Link>
             <Link href="/about" className="text-[var(--green)]">SOPORTE</Link>
           </div>
           </>
@@ -104,7 +104,10 @@ export default function Navbar() {
           { logedUser === null || logedUser && logedUser.type === "CLIENT" &&
             <CartiIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleCart} />
           }
-          <UserIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleUserIcon}/>
+          {logedUser && logedUser.profileIcon
+            ? <Image src={logedUser.profileIcon.url} alt={logedUser.profileIcon.name} width={30} height={30} className="cursor-pointer" onClick={handleUserIcon}/>
+            : <UserIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleUserIcon}/>
+          }
           {logedUser && <LogoutIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={logOut}/>}
         </div>
     </nav>

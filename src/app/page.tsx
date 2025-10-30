@@ -15,16 +15,21 @@ export default function LandingPage() {
       <div className='relative'>
         <Image src="/mujer-escuchando-musica-modified.png" alt="Girl listening music" width={1920} height={720}/>
         <div className='absolute top-30 left-20 text-5xl flex flex-col text-white hover:scale-103 duration-300'>
-          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>ESCUCHA</span> MUSICA Y JUEGA</h2>
-          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>CON</span> LA MEJOR CALIDAD DE SONIDO</h2>
+          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>ESCUCHA</span> MÚSICA Y JUEGA</h2>
+          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>CON</span> LA MEJOR C
+          ALIDAD DE SONIDO</h2>
         </div>
       </div>
       
-      <h2 className='text-5xl text-[var(--green)] cursor-default duration-200 hover:scale-103'><span className='font-semibold'>Productos</span> Destacados</h2>
+      <h2 className='text-5xl text-[var(--green)] cursor-default duration-200 hover:scale-103'>
+        <span className='font-semibold'>Productos</span> Destacados
+      </h2>
 
       <Carrousel />
 
-      <h2 className='text-5xl text-[var(--green)] cursor-default duration-200 hover:scale-103'><span className='font-semibold'>Tecnología</span> de cancelación de ruido</h2>
+      <h2 className='text-5xl text-[var(--green)] cursor-default duration-200 hover:scale-103'>
+        <span className='font-semibold'>Tecnología</span> de cancelación de ruido
+      </h2>
 
       <div className='relative h-160 w-full' style={{background: 'linear-gradient(to right, #111111 55%, #262626)'}}>
         <Image src="/blackshark2.png" alt='auriculares blackshark' width={800} height={800} className='absolute left-50' />

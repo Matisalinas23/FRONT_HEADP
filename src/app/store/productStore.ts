@@ -3,16 +3,16 @@ import { create } from "zustand";
 
 interface productState {
     products: IProduct[] | []
-    product: IProduct | null
+    activeProduct: IProduct | null
     setProducts: (products: IProduct[] | []) => void
-    setProduct: (product: IProduct | null) => void
+    setActiveProduct: (product: IProduct | null) => void
 }
 
 const productStore = create<productState>((set) => ({
     products: [],
-    product: null,
+    activeProduct: null,
     setProducts: (newProducts: IProduct[] | []) => set(() => ({ products: newProducts })),
-    setProduct: (newProduct: IProduct | null) => set(() => ({ product: newProduct}))
+    setActiveProduct: (newProduct: IProduct | null) => set(() => ({ activeProduct: newProduct}))
 }))
 
 export default productStore

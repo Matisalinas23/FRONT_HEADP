@@ -1,12 +1,13 @@
-import axios from "axios"
+import api from "./axios"
 import { ICategory } from "../type/category"
+import axios from "axios"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
 const CATEGORIES_URL = `${BASE_URL}/categories`
 
 export const createCategoryHttp = async(body: ICategory): Promise<ICategory | undefined> => {
     try {
-        const response = await axios.post<ICategory>(CATEGORIES_URL, body)
+        const response = await api.post<ICategory>(CATEGORIES_URL, body)
 
         return response.data;
     } catch (error) {
@@ -26,7 +27,7 @@ export const getCategoriesHttp = async(): Promise<ICategory[] | undefined> => {
 
 export const deleteCategoryHttp = async(categoryId: number): Promise<void> => {
     try {
-        const response = await axios.delete(`${CATEGORIES_URL}/${categoryId}`)
+        const response = await api.delete(`${CATEGORIES_URL}/${categoryId}`)
         console.log(response.data)
     } catch (error) {
         console.log("Error in 'deleteCategoryHttp' ", error)

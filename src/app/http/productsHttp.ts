@@ -1,4 +1,5 @@
 import axios from "axios"
+import api from './axios'
 import { IProduct } from "../type/product"
 import { ICategory } from "../type/category"
 
@@ -69,7 +70,7 @@ export const getProductsByPriceRangeHttp = async(minPrice: string, maxPrice: str
 
 export const createProductHttp = async(body: FormData): Promise<IProduct | undefined> => {
     try {
-        const response = await axios.post<IProduct>(PRODUCT_URL, body)
+        const response = await api.post<IProduct>(PRODUCT_URL, body)
 
         return response.data;
     } catch (error) {
@@ -79,12 +80,9 @@ export const createProductHttp = async(body: FormData): Promise<IProduct | undef
 
 export const updateProductHttp = async (body: Partial<IProduct>, productId: number): Promise<IProduct | undefined> => {
     try {
-        const token = localStorage.getItem('token')
-        
-        const updatedProduct = await axios.put<IProduct>(
+        const updatedProduct = await api.put<IProduct>(
             `${PRODUCT_URL}/${productId}`,
             body,
-            { headers: { Authorization: `Bearer: ${token}` } }
         )
 
         return updatedProduct.data;
@@ -95,12 +93,9 @@ export const updateProductHttp = async (body: Partial<IProduct>, productId: numb
 
 export const updateImageProductHttp = async (image: FormData, productId: number): Promise<IProduct | undefined> => {
     try {
-        const token = localStorage.getItem('token')
-
-        const updatedProduct = await axios.put<IProduct>(
+        const updatedProduct = await api.put<IProduct>(
             `${PRODUCT_URL}/update_image/${productId}`,
             image,
-            { headers: { Authorization: `Bearer: ${token}` } }
         )
 
         return updatedProduct.data;
@@ -111,11 +106,9 @@ export const updateImageProductHttp = async (image: FormData, productId: number)
 
 export const updateCategoriesHttp = async (categories: ICategory[], productId: number): Promise<IProduct | undefined> => {
     try {
-        const token = localStorage.getItem('token')
-        const response = await axios.put<IProduct>(
+        const response = await api.put<IProduct>(
             `${PRODUCT_URL}/update_categories/${productId}`,
             { categories },
-            { headers: { Authorization: `Bearer: ${token}` } }
         )
 
         return response.data;
@@ -127,7 +120,7 @@ export const updateCategoriesHttp = async (categories: ICategory[], productId: n
 
 export const deleteProductHttp = async(productId: number): Promise<void> => {
     try {
-        await axios.delete<IProduct>(`${PRODUCT_URL}/${productId}`)
+        await api.delete<IProduct>(`${PRODUCT_URL}/${productId}`)
     } catch (error) {
         console.log("Error in 'deleteProductHttp' ", error)
     }

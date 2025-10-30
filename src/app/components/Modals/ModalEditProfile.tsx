@@ -8,9 +8,11 @@ import AcceptButton from "../AcceptButton"
 import CancelButton from "../CancelButton"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { updateUserHttp } from "../../http/userHttp"
+import { updateUserAddressHttp, updateUserHttp } from "../../http/userHttp"
 import { IUser } from "../../type/user"
 import ModalSelectIcon from "./ModalSelectIcon"
+import { IAddress } from "@/app/type/address"
+import Loading from "../Loading/Loading"
 
 type EditProfileProps = {
     openModal: (el: boolean) => void,
@@ -60,18 +62,20 @@ export default function ModalEditProfile({ openModal, logedUser }: EditProfilePr
             const userValues: Partial<IUser> = {
                 name: values.name,
                 email: values.email,
-                address: {
-                    particularAddress: values.particularAddress,
-                    city: values.city,
-                    province: values.province,
-                    country: values.country,
-                }
+            }
+
+            const address: IAddress = {
+                particularAddress: values.particularAddress,
+                city: values.city,
+                province: values.province,
+                country: values.country
             }
 
             const success = await updateUserHttp(logedUser.id!, userValues)
+            const successAddress = await updateUserAddressHttp(logedUser.id!, address)
 
-            if (!success) {
-                alert("Hubo un problema al realizar el Login, intentalo mas tarde")
+            if (!success || !successAddress) {
+                alert("Hubo un problema al actualizar el usuario, intentalo mas tarde")
             }
 
             openModal(false)
@@ -81,6 +85,11 @@ export default function ModalEditProfile({ openModal, logedUser }: EditProfilePr
     return (
         <div className="w-240 h-160 absolute top-20 left-1/2 -translate-x-1/2 py-4 px-28 bg-[var(--darkgray)] flex flex-col items-center">
             <h3 className="my-2 w-full text-lg text-[var(--green)] flex gap-1"><p className="font-semibold">Selecciona</p> un ícono de perfil</h3>
+            {!profileIcons.length &&
+                <div className="h-40 w-full flex items-center justify-center">
+                    <Loading/>
+                </div>
+            }
             <div className="w-full max-h-40 overflow-y-auto py-2 mb-8 grid grid-cols-4 gap-y-8 place-items-center">
                 {profileIcons.map((pi) => (
                     <Image

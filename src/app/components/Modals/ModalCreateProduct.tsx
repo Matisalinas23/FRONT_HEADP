@@ -1,3 +1,5 @@
+'use client'
+
 import AcceptButton from "../AcceptButton";
 import CancelButton from "../CancelButton";
 import { FormikProps, useFormik } from "formik";
@@ -6,6 +8,7 @@ import { ICategory } from "../../type/category";
 import { createProductHttp } from "../../http/productsHttp";
 import ImageSelector from "../ImageSelector";
 import CategoryList from "../CategoryList";
+import { useState } from "react";
 
 type CreateProductProps = {
   openModal: (el: boolean) => void
@@ -23,6 +26,7 @@ export interface IFormValues {
 }
 
 export default function ModalCreateProduct({ openModal, categories, getProducts }: CreateProductProps) {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const inputStyle = "bg-[var(--lightgray)] pl-2 h-7"
 
@@ -39,6 +43,8 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
       name: Yup.string().max(40, '40 caracteres máximos')
     }),
     onSubmit: async (values) => {
+      setIsSubmitting(true)
+
       if (!values.image || categories.length === 0) { // Image can not be 'null'
         alert("La imagen no ha sido subida, vuelve a intentarlo o intenta con otra imagen")
         return;
@@ -64,13 +70,13 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
       formData.append("image", values.image)
       
       const success = await createProductHttp(formData)
-      console.log(success)
 
       if (!success) {
         alert("No se pudo crear el producto, intentalo mas tarde")
         return;
       }
 
+      setIsSubmitting(false)
       getProducts()
       openModal(false)
     }
@@ -109,7 +115,7 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
 
       <div className="w-full flex justify-between">
         <CancelButton openModal={openModal}/>
-        <AcceptButton type="submit"/>
+        <AcceptButton type="submit" disabled={isSubmitting ? true : false}/>
       </div>
     </form>
   )

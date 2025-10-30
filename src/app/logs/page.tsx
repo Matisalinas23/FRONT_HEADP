@@ -9,8 +9,11 @@ import Loading from '../components/Loading/Loading'
 export default function Logs() {
   const [sales, setSales] = useState<ISale[]>([])
   const [data, setData] = useState<{ name: string, quantity: number }[]>([])
+  const [isGettingSales, setIsGettingSales] = useState<boolean>(false)
 
   const getData = (sales: ISale[]) => {
+    setIsGettingSales(true)
+
     const tempData: { name: string, quantity: number }[] = [];
 
     sales.forEach(sale => {
@@ -35,6 +38,7 @@ export default function Logs() {
 
     console.log("Data: ", tempData)
     setData(tempData)
+    setIsGettingSales(false)
   }
 
   useEffect(() => {
@@ -59,10 +63,18 @@ export default function Logs() {
     getSalesAndData()
   }, [])
 
-  if (sales.length === 0) {
+  if (isGettingSales) {
     return (
       <div className='h-[80vh]'>
         <Loading />
+      </div>
+    )
+  }
+
+  if (sales.length === 0) {
+    return (
+      <div className='pt-8 pb-56 px-60 flex flex-col items-center gap-40'>
+        <h2 className='w-full text-[2rem] mb-8'><span className='font-semibold'>No</span> se han registrado ventas</h2>
       </div>
     )
   }

@@ -1,23 +1,18 @@
 import axios from "axios"
+import api from './axios'
 import { IUser } from "../type/user";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+import { IAddress } from "../type/address";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
 const USER_URL = `${BASE_URL}/users`
 
 export const getUsersHttp = async (): Promise<IUser[] | undefined> => {
-    const token = localStorage.getItem('token')
-
     try {
-        if (!token) {
-            console.error("Token was not found in local storage")
-            throw new Error
-        }
+        const users = await axios.get<IUser[]>(USER_URL)
 
-        const users = await axios.get<IUser[]>(USER_URL, { headers: { Authorization: `Bearer: ${token}` } })
         return users.data;
     } catch (error) {
-        console.log("Error in 'getUserHttp'", error)
+        console.log("Error in 'getUsersHttp'", error)
     }
 }
 
@@ -30,7 +25,7 @@ export const getUserByIdHttp = async (userId: number): Promise<IUser | undefined
             throw new Error
         }
 
-        const user = await axios.get<IUser>(`${USER_URL}/${userId}`, { headers: { Authorization: `Bearer: ${token}` } } )
+        const user = await api.get<IUser>(`${USER_URL}/${userId}`)
 
         return user.data
     } catch (error) {
@@ -40,7 +35,7 @@ export const getUserByIdHttp = async (userId: number): Promise<IUser | undefined
 
 export const getUserByEmailHttp = async (email: string): Promise<IUser | undefined> => {
     try {
-        const response = await axios.get(`${USER_URL}/${email}`)
+        const response = await api.get(`${USER_URL}/${email}`)
 
         return response.data
     } catch (error) {
@@ -50,17 +45,34 @@ export const getUserByEmailHttp = async (email: string): Promise<IUser | undefin
 
 export const updateUserHttp = async (userId: number, body: Partial<IUser>): Promise<IUser | undefined> => {
     try {
-        const response = await axios.put<IUser>(`${USER_URL}/${userId}`, body)
-        console.log("updated user", response.data)
+        const response = await api.put<IUser>(`
+            ${USER_URL}/${userId}`,
+            body
+        )
+        
         return response.data;
     } catch (error) {
         console.log("Error in 'updateUserHttp' ", error)
     }
 }
 
+export const updateUserAddressHttp = async (userId: number, address: IAddress): Promise<IUser | undefined> => {
+    console.log("address: ", address)
+    try {
+        const response = await api.put<IUser>(
+            `${USER_URL}/update_address/${userId}`,
+            address,
+        )
+
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const deleteUserHttp = async (userId: number): Promise<void> => {
     try {
-        await axios.delete<string>(`${USER_URL}/${userId}`)
+        await api.delete<string>(`${USER_URL}/${userId}`)
     } catch (error) {
         console.log("Error in 'deleteUserHttp'", error)
     }
@@ -68,8 +80,12 @@ export const deleteUserHttp = async (userId: number): Promise<void> => {
 
 export const addProfileIconHttp = async (userId: number, body: Partial<IUser>): Promise<IUser | undefined> => {
     try {
-        const response = await axios.put<IUser>(`${USER_URL}/add_profile_icon/${userId}`, body)
-        console.log("User updated: ", response.data)
+        const token = localStorage.getItem('token')
+        const response = await api.put<IUser>(`
+            ${USER_URL}/add_profile_icon/${userId}`,
+            body
+        )
+
         return response.data;
     } catch(error) {
         console.log("Error in 'addProfileIconHttp' ", error)

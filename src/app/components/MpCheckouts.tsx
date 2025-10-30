@@ -2,12 +2,14 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IProduct } from '../type/product';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { IUser } from '../type/user';
 
 interface Props {
   product: IProduct;
+  logedUser: IUser | null;
 }
 
-export const MercadoPagoWallet = ({ product }: Props) => {
+export const MercadoPagoWallet = ({ product, logedUser }: Props) => {
   const [preferenceId, setPreferenceId] = useState<string>('');
 
   const MP_PUBLIC_KEY = "APP_USR-1018779b-8ed3-44cb-8f0a-1a33c0bca908"
@@ -19,7 +21,7 @@ export const MercadoPagoWallet = ({ product }: Props) => {
   const createPreferenceId = async () => {
     const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL;
     const createPreferenceIdEndpoint = `${BASE_URL}/mpCheckouts/createPreferenceId`;
-    const token = '23'
+    const token = localStorage.getItem('token')
       try {
         const response = await axios.post(
           createPreferenceIdEndpoint,
@@ -50,6 +52,7 @@ export const MercadoPagoWallet = ({ product }: Props) => {
   return (
     <div>
       <button
+        disabled={ !logedUser && true}
         onClick={createPreferenceId}
         className="w-full h-8 font-light bg-[var(--darkgreen)] cursor-pointer duration-200 hover:scale-103"
       >

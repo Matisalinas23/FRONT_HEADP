@@ -7,6 +7,8 @@ import { IProfileIcon } from "../type/profileIcon";
 import ModalEditProfile from "../components/Modals/ModalEditProfile";
 import { authStore } from "../store/authStore";
 import { useShallow } from "zustand/shallow";
+import Loading from "../components/Loading/Loading";
+import { div } from "motion/react-client";
 
 export default function AccountPage() {
   const [profileIcon, setProfileIcon] = useState<IProfileIcon | null | Partial<IProfileIcon>>(null)
@@ -38,7 +40,6 @@ export default function AccountPage() {
 
   useEffect(() => {
     getProfileIcon()
-    console.log(logedUser)
   }, [logedUser])
 
   if (!logedUser) {
@@ -57,9 +58,17 @@ export default function AccountPage() {
     )
   }
 
+  if (!profileIcon) {
+    return (
+      <div className="h-[80vh] w-full flex items-center justify-center">
+        <Loading/>
+      </div>
+    )
+  }
+
   return (
-    <div className="h-screen px-88 pt-8">
-      <div className="h-1/3 border-b-1 flex flex-col items-center gap-4">
+    <div className="h-screen px-88 pt-16">
+      <div className="h-1/3 flex flex-col items-center gap-8">
         {profileIcon
           ? <Image src={profileIcon.url!} alt="profileIcon" width={180} height={180}/>
           : <Image src={"/default.png"} alt="profileIcon" width={180} height={180}/>
@@ -69,9 +78,6 @@ export default function AccountPage() {
           : <p>undefined</p>
         }
         <button className="border-1 border-[var(--darkgreen)] py-1 px-4 hover:cursor-pointer" onClick={() => setIsEditProfil(true)}>Editar Perfil</button>
-      </div>
-      <div className="py-8 flex justify-center">
-        to-do: Purchase ordesrs
       </div>
 
       {isEditProfile && logedUser &&

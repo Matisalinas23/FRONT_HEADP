@@ -1,61 +1,45 @@
 'use client'
 
-import { useProducts } from '@/app/hooks/useProducts'
 import productStore from '@/app/store/productStore'
 import Image from 'next/image'
-import React, { use, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import ModalAddToCart from '@/app/components/Modals/ModalAddToCart'
-import { authStore } from '@/app/store/authStore'
 import ModalBuyProduct from '@/app/components/Modals/ModalBuyProduct'
 import { MercadoPagoWallet } from '@/app/components/MpCheckouts'
-import Loading from '@/app/components/Loading/Loading'
-import { IProduct } from '@/app/type/product'
-import { getProductByIdHttp } from '@/app/http/productsHttp'
+import { authStore } from '@/app/store/authStore'
+import { useUser } from '@/app/hooks/useUser'
+import { useParams } from 'next/navigation'
 
-export default function BuyProduct({ params }: { params: Promise<{ id: string }> }) {
-  const [product, setProduct] = useState<IProduct | undefined>(undefined)
-
-  const { id } = use(params)
-  console.log("prodid: ", params)
-
+export default function BuyProduct() {
   // Local states
-  
-  const [loading, setLoading] = useState<boolean>(true)
   const [isReceipt, setIsReceipt] = useState<boolean>(true)
   const [isModalAddToCart, setIsModalAddToCart] = useState<boolean>(false)
   const [isModalBuy, setIsModalBuy] = useState<boolean>(false)
 
-  // global sates stores
+  // global sates
   const logedUser = authStore(state => state.logedUser)
+  const activeProduct = productStore(state => state.activeProduct)
 
   // hooks
-  const navigate = useRouter()
+  const { getLogedUser } = useUser()
 
   const countries: string[] = ['bolivia' , 'paraguay' , 'uruguay' , 'brasil' , 'chile' , 'argentina']
-  
+  const { id } = useParams()
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const product = await getProductByIdHttp(id)
-      setProduct(product)
-      setLoading(false) // take off the load message
-    }
+    getLogedUser()
 
-    fetchProduct()
+    if (!logedUser) {
+      alert('Debes iniciar sesión para comprar un producto')
+    }
   }, [])
 
-  if (loading) {
+  if (!activeProduct) {
     return (
-      <div className='h-[80vh]'>
-        <Loading />
+      <div className='h-[80vh] flex items-center justify-center'>
+        <h2 className='text-[2rem] text-neutral-500 font-semibold'>Producto no disponible...</h2>
       </div>
     )
-  }
-
-  if (!product) {
-    navigate.push('/')
-    return null
   }
 
   if (logedUser && logedUser.type === "ADMIN") {
@@ -70,20 +54,20 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
     <div className='px-90 py-16'>
       <div className='min-h-86 w-fit flex items-center gap-12'>
         <div className='min-w-130 bg-white flex justify-center items-center'>
-          {product.image && <Image src={product.image.url} alt='product image' width={340} height={340} />}
+          {activeProduct.image && <Image src={activeProduct.image.url} alt='product image' width={340} height={340} />}
         </div>
 
         <div className='border max-w-190 min-h-80 h-fit bg-[var(--darkgray)] py-4 px-8'>
-          <h3 className='text-xl font-bold mb-10'>{product.name}</h3>
+          <h3 className='text-xl font-bold mb-10'>{activeProduct.name}</h3>
 
           <div className='w-full flex gap-4'>
             <div className='min-w-60'>
-              <p className='w-fit text-2xl mb-4'>$ {product.price}</p>
+              <p className='w-fit text-2xl mb-4'>$ {activeProduct.price}</p>
               <p className='w-fit mb-4 text-[var(--green)] cursor-pointer duration-200 hover:underline'>Ver medios de pago</p>
               <p>Caracteristicas principales:</p>
 
               <div className='pl-1'>
-                {product?.categories.map((category) => (
+                {activeProduct.categories.map((category) => (
                   <p key={category.id} className='text-[14px] w-fit flex items-center gap-2'><span className='w-[11px] h-[11px] bg-white rounded-full'></span>{category.name}</p>
                 ))}
               </div>
@@ -93,30 +77,31 @@ export default function BuyProduct({ params }: { params: Promise<{ id: string }>
               <div className='flex flex-col justify-between mb-4'>
                 <p className='w-full flex'>Emitir recibo: <span className='ml-1'>{isReceipt ? 'Si' : 'No'}</span>
                 </p>
-                <p className='mb-4'>Stock disponible: {product.stock}</p>
+                <p className='mb-4'>Stock disponible: {activeProduct.stock}</p>
                 <p>Llega en: {logedUser && logedUser.address && countries.includes(logedUser.address!.country) ? '24-48 horas' : '48-96 horas'}</p>
               </div>
               
               <button
+                disabled={ !logedUser && true}
                 className='w-full h-9 mb-2 duration-200 bg-[var(--background)] cursor-pointer hover:scale-103'
                 onClick={() => setIsModalAddToCart(true)}
               >
                 Añadir al carrito
               </button>
 
-              <MercadoPagoWallet product={product} />
+              <MercadoPagoWallet product={activeProduct} logedUser={logedUser} />
             </div>
           </div>
 
           {isModalAddToCart &&
             <div className='fixed inset-0 h-screen w-screen bg-[var(--background)]/50 flex items-center justify-center'>
-              <ModalAddToCart product={product} openModal={setIsModalAddToCart} />
+              <ModalAddToCart product={activeProduct} openModal={setIsModalAddToCart} />
             </div>
           }
 
           {isModalBuy &&
             <div className='fixed inset-0 h-screen w-screen bg-[var(--background)]/50 flex items-center justify-center'>
-              <ModalBuyProduct openModal={setIsModalBuy} setIsReceipt={setIsReceipt} isReceipt={isReceipt} product={product}/>
+              <ModalBuyProduct openModal={setIsModalBuy} setIsReceipt={setIsReceipt} isReceipt={isReceipt} product={activeProduct}/>
             </div>
           }
         </div>

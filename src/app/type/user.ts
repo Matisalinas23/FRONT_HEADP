@@ -14,6 +14,6 @@ export interface IUser {
     birthday: string,
     type?: Enum
     address?: IAddress | null,
-    profileIcon?: IProfileIcon | null | Partial<IUser>,
+    profileIcon?: IProfileIcon | null,
     purchaseOrders: IPurchaseOrder[]
 }

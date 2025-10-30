@@ -52,14 +52,6 @@ export default function ProductManagement() {
     return (<NoAdminScreen />)
   }
 
-  if (categories.length === 0 || products.length === 0) {
-    return (
-      <div className='h-[80vh]'>
-        <Loading />
-      </div>
-    )
-  }
-
   return (
     <div className="py-16 flex justify-center gap-12">
       <div className="w-54">
