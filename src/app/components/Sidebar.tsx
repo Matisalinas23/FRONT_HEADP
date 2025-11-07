@@ -69,7 +69,7 @@ export default function Sidebar({ setProducts }: SidebarProps) {
 
   // 🧱 5️⃣ Render
   return (
-    <div className='h-full w-1/6 px-12 pt-4 bg-[var(--background)] flex flex-col items-center'>
+    <div className='h-full w-80 px-12 pt-4 bg-[var(--background)] flex flex-col items-center'>
       <div className='border-b-2 w-full pb-6 border-[var(--gray)] flex flex-col items-center'>
         <h3 className='text-xl font-light w-fit mb-6'>Filtrar por categorías</h3>
 

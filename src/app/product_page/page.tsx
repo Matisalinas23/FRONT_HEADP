@@ -50,16 +50,15 @@ export default function ProductPageClient() {
   }
 
   return (
-    <div className="h-fit py-16 flex">
+    <div className="h-fit px-8 py-16 flex">
       <Sidebar setProducts={setProducts} />
 
-      <div className="h-fit w-5/6 py-4 border-l-2 border-[var(--gray)] grid grid-cols-4 place-items-center gap-y-24">
+      <div className="h-fit flex-1 py-4 border-l-2 border-[var(--gray)] flex flex-wrap justify-center gap-24">
         {filteredProducts.length > 0
           ? filteredProducts.map((product) => (
               <ProductCardCarrousel key={product.id} product={product} />
             ))
-          : products &&
-            products.map((product) => (
+          : products && products.map((product) => (
               <ProductCardCarrousel key={product.id} product={product} />
             ))}
       </div>

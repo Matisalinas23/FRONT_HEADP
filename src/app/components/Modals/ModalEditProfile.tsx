@@ -13,6 +13,7 @@ import { IUser } from "../../type/user"
 import ModalSelectIcon from "./ModalSelectIcon"
 import { IAddress } from "@/app/type/address"
 import Loading from "../Loading/Loading"
+import { authStore } from "@/app/store/authStore"
 
 type EditProfileProps = {
     openModal: (el: boolean) => void,
@@ -23,6 +24,8 @@ export default function ModalEditProfile({ openModal, logedUser }: EditProfilePr
     const [profileIcons, setProfileIcons] = useState<IProfileIcon[]>([])
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
     const [selectedIcon, setSelectedIcon] = useState<IProfileIcon | null>(null)
+
+    const setLogedUser = authStore((state) => state.setLogedUser)
 
     const getAllProfileIcons = async () => {
         const profileIcons = await getAllProfileIconsHttp()
@@ -49,10 +52,10 @@ export default function ModalEditProfile({ openModal, logedUser }: EditProfilePr
         initialValues: {
             name: logedUser.name,
             email: logedUser.email,
-            particularAddress: logedUser.address ? logedUser.address.particularAddress : "",
-            city: logedUser.address ? logedUser.address.city : "",
-            province: logedUser.address ? logedUser.address.province : "",
-            country: logedUser.address ? logedUser.address.country : ""
+            particularAddress: logedUser.address!.particularAddress,
+            city: logedUser.address!.city,
+            province: logedUser.address!.province,
+            country: logedUser.address!.country
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Requerido").max(16, "No debe superar los 16 caracteres").min(2, "Debe tener al menos 2 caracteres"),
@@ -76,8 +79,10 @@ export default function ModalEditProfile({ openModal, logedUser }: EditProfilePr
 
             if (!success || !successAddress) {
                 alert("Hubo un problema al actualizar el usuario, intentalo mas tarde")
+                return
             }
 
+            setLogedUser(successAddress)
             openModal(false)
         }
     })

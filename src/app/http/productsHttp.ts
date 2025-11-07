@@ -30,10 +30,7 @@ export const getProductHttp = async(id?: number, name?: string): Promise<IProduc
 
 export const getProductByIdHttp = async(productId: string): Promise<IProduct | undefined> => {
     try {
-        const response = await axios.get<IProduct>(`${PRODUCT_URL}/search?id=${productId}`)
-        console.log('status: ', response.status)
-        console.log('headers: ', response.headers)
-        console.log('data: ', response.data)
+        const response = await api.get<IProduct>(`${PRODUCT_URL}/search?id=${productId}`)
 
         return response.data
     } catch (error) {
@@ -123,5 +120,14 @@ export const deleteProductHttp = async(productId: number): Promise<void> => {
         await api.delete<IProduct>(`${PRODUCT_URL}/${productId}`)
     } catch (error) {
         console.log("Error in 'deleteProductHttp' ", error)
+    }
+}
+
+export const getProductByName = async (name: string): Promise<IProduct | undefined> => {
+    try {
+        const response = await api.get<IProduct>(`${PRODUCT_URL}/search?name=${name}`)
+        return response.data
+    } catch (error) {
+        console.log("Error in 'getProductByName' ", error)
     }
 }

@@ -11,7 +11,7 @@ export default function Carrousel() {
   const { getProducts } = useProducts()
 
   // stores
-  const products = productStore((state) => state.products)
+  const products = productStore((state) => state.products).slice(-8)
 
   // Scrolling logic
   const scrollRef = useRef<HTMLDivElement>(null);

@@ -2,6 +2,7 @@ import axios from "axios"
 import api from './axios'
 import { IUser } from "../type/user";
 import { IAddress } from "../type/address";
+import { IProfileIcon } from "../type/profileIcon";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
 const USER_URL = `${BASE_URL}/users`
@@ -35,7 +36,7 @@ export const getUserByIdHttp = async (userId: number): Promise<IUser | undefined
 
 export const getUserByEmailHttp = async (email: string): Promise<IUser | undefined> => {
     try {
-        const response = await api.get(`${USER_URL}/${email}`)
+        const response = await api.get(`${USER_URL}/get_by_email/${email}`)
 
         return response.data
     } catch (error) {
@@ -45,8 +46,8 @@ export const getUserByEmailHttp = async (email: string): Promise<IUser | undefin
 
 export const updateUserHttp = async (userId: number, body: Partial<IUser>): Promise<IUser | undefined> => {
     try {
-        const response = await api.put<IUser>(`
-            ${USER_URL}/${userId}`,
+        const response = await api.put<IUser>(
+            `${USER_URL}/${userId}`,
             body
         )
         
@@ -78,13 +79,9 @@ export const deleteUserHttp = async (userId: number): Promise<void> => {
     }
 }
 
-export const addProfileIconHttp = async (userId: number, body: Partial<IUser>): Promise<IUser | undefined> => {
+export const addProfileIconHttp = async (userId: number, body: { iconId: number }): Promise<IUser | undefined> => {
     try {
-        const token = localStorage.getItem('token')
-        const response = await api.put<IUser>(`
-            ${USER_URL}/add_profile_icon/${userId}`,
-            body
-        )
+        const response = await api.put<IUser>(`${USER_URL}/add_profile_icon/${userId}`, body)
 
         return response.data;
     } catch(error) {

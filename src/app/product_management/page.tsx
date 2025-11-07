@@ -94,6 +94,12 @@ export default function ProductManagement() {
           Añadir Producto
         </button>
       </div>
+
+      <div className="bg-neutral-700 h-fit font-light p-2 rounded-xl flex flex-col items-center gap-1">
+        <span>Productos:</span>
+        <b className="text-xl">{products.length}</b>
+      </div>
+
       {openCreateCategory && !modalDeleteCategory && !modalCreateProduct &&
         <div className="fixed inset-0 h-screen w-screen bg-[var(--background)]/50">
           <ModalCreateCategory openModal={setOpenCreateCategory} getCategories={getCategories} />

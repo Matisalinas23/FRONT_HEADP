@@ -53,20 +53,7 @@ export default function Searchbar() {
         </button>
       </div>
 
-      {activeSearch.length > 0 &&
-        <div className='absolute w-full z-1 border-1 border-[var(--gray)] mt-2 px-4 py-2 bg-[var(--background)] rounded-[12px]'>
-          {activeSearch.map((word) => (
-            <p key={word} className='p-2 align-middle line-clamp-1 my-2 cursor-pointer hover:bg-[var(--gray)] rounded-[10px]'
-            onClick={() => {
-              navigate.push(`/product_page?search=${encodeURIComponent(word)}`)
-              setValue(word)
-            }}
-            >
-              {word}
-            </p>
-          ))}
-        </div>
-      }
+      
     </form>
   )
 }

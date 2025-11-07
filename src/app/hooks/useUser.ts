@@ -22,6 +22,7 @@ export const useUser = () => {
                 return false
             }
 
+            console.log("Loged User: ", user)
             setLogedUser(user)
 
             return true;

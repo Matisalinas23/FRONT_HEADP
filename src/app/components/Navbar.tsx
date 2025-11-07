@@ -5,7 +5,7 @@ import Searchbar from "./Searchbar";
 import UserIcon from "@/svg/user-circle-svgrepo-com.svg"
 import CartiIcon from "@/svg/cart-shopping-svgrepo-com.svg"
 import LogoutIcon from "@/svg/logout-svgrepo-com.svg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Login } from "./Login";
 import { useRouter } from "next/navigation";  
 import { authStore } from "../store/authStore";
@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const navigate = useRouter()
 
-  // TailwindStyles (i move this styles here to code looks more cleen)
+  // Tailwind styles
   const ulStyle: string = "absolute z-50 top-16 right-8 w-80 mr-12 text-[var(--white)] bg-[var(--darkgray)] border-2 border-[var(--lightgray2)] p-4 flex flex-col justify-between"
   const liStyle: string = "pl-4 hover:cursor-pointer"
   const divlaneStyle: string = "w-71 mt-4 mb-4 border-t-1 border-[var(--lightgray2)]"
@@ -32,9 +32,25 @@ export default function Navbar() {
     setLogedUser: state.setLogedUser,
     setToken: state.setToken
   })))
+
+  useEffect(() => {
+    let hasLoggedOut: boolean = false // Local flag
+
+    const handleLogout = () => {
+      if (hasLoggedOut) return;
+      
+      hasLoggedOut = true
+      alert("La sesión ha expirado, por favor, vuelve a iniciar sesión")
+      navigate.push("/")
+      setLogedUser(null)
+    }
+
+    window.addEventListener("userLoggedOut", handleLogout);
+    return () => window.removeEventListener("userLoggedOut", handleLogout);
+  }, [])
   
 
-  // onClick arrow functions =>
+  // arrow functions =>
   const openLogin = () => {
     setIsDropdown(false)
     setIsOpenLogin(true)
@@ -76,39 +92,41 @@ export default function Navbar() {
 
   return (
     <div className="flex flex-col">
-      <nav className="h-20 flex items-center justify-between bg-[var(--darkgray)] text-white pl-24 pr-24">
-        {logedUser && logedUser.type==="ADMIN"
-          ?
-          <>
-          <Link href="/"><h1 className="text-4xl font-bold text-[var(--darkgreen)]">HeadP Admin Page</h1></Link>
-          <Link href="/product_management" className="text-[var(--green)]">Gestión de producto</Link>
-          <Link href="/logs" className="text-[var(--green)]">Registros</Link>
-          </>
-          :
-          <>
-          <Link href="/"><h1 className="text-4xl font-bold text-[var(--darkgreen)]">HeadP</h1></Link>
-          <div className="flex items-center gap-12 text-sm">
-            <Link href={{ pathname: '/product_page', query: { category: 'gaming' } }} className="text-[var(--green)]">GAMING</Link>
-            <Link href={{ pathname: '/product_page', query: { category: 'IN-EAR' } }} className="text-[var(--green)]">IN-EAR</Link>
-            <Link href={{ pathname: '/product_page', query: { category: 'ON-EAR' } }} className="text-[var(--green)]">ON-EAR</Link>
-            <Link href="/about" className="text-[var(--green)]">SOPORTE</Link>
+      <nav className="min-h-30 text-white px-4 flex flex-row items-center justify-between gap-4 xl:min-h-20 bg-[var(--darkgray)] lg:px-24">
+        <Link href="/" className="text-4xl font-bold text-[var(--darkgreen)]">{logedUser?.type==="ADMIN" ?  "HeadP Admin Page" : "HeadP"}</Link>
+
+        <div className="w-fit xl:flex-row flex flex-col items-center gap-4 gap-x-12">
+          {logedUser && logedUser.type==="ADMIN"
+            ?
+            <div className="flex gap-4">
+              <Link href="/product_management" className="text-[var(--green)]">Gestión de producto</Link>
+              <Link href="/logs" className="text-[var(--green)]">Registros</Link>
+            </div>
+            :
+            <>
+            <div className="flex items-center gap-4 text-sm">
+              <Link href={{ pathname: '/product_page', query: { category: 'Gaming' } }} className="text-[var(--green)]">GAMING</Link>
+              <Link href={{ pathname: '/product_page', query: { category: 'IN-EAR' } }} className="text-[var(--green)]">INEAR</Link>
+              <Link href={{ pathname: '/product_page', query: { category: 'ON-EAR' } }} className="text-[var(--green)]">ONEAR</Link>
+              <Link href="/about" className="text-[var(--green)]">SOPORTE</Link>
+            </div>
+            </>
+          }
+
+          <div className="flex w-80 xl:w-1/2 justify-center">
+            <Searchbar />
           </div>
-          </>
-        }
+        </div>
 
-      <div className="flex w-1/2 justify-center">
-        <Searchbar />
-      </div>
-
-      <div className="flex items-center gap-8 mr-4">
+      <div className="flex w-40 items-center gap-8 mr-4">
           { logedUser === null || logedUser && logedUser.type === "CLIENT" &&
-            <CartiIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleCart} />
+            <CartiIcon className="h-8 min-w-8 max-w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleCart} />
           }
           {logedUser && logedUser.profileIcon
             ? <Image src={logedUser.profileIcon.url} alt={logedUser.profileIcon.name} width={30} height={30} className="cursor-pointer" onClick={handleUserIcon}/>
             : <UserIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleUserIcon}/>
           }
-          {logedUser && <LogoutIcon className="h-8 w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={logOut}/>}
+          {logedUser && <LogoutIcon className="h-8 min-w-8 max-w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={logOut}/>}
         </div>
     </nav>
 

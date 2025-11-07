@@ -19,6 +19,7 @@ export const registerUserHttp = async (userData: IUser): Promise<{ token: string
 }
 
 export const loginUserHttp = async (email: string, password: string) => {
+    console.log("LoginUserUrl: ", AUTH_URL + "/login")
     try {
         const response = await api.post(AUTH_URL + "/login", { email, password })
         localStorage.setItem('token', response.data.accessToken)

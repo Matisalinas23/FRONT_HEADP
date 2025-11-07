@@ -12,9 +12,9 @@ export default function ProductCardCarrousel({ product }: Props) {
   const navigate = useRouter()
   
   const setActiveProduct = productStore(state => state.setActiveProduct)
+  const activeProduct = productStore(state => state.activeProduct)
 
   const handleGoToProduct = () => {
-    setActiveProduct(product)
     navigate.push(`/product_page/buy_product/${product.id}`)
   }
 

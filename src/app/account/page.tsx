@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getUsersHttp } from "../http/userHttp";
+import { getUserByIdHttp, getUsersHttp } from "../http/userHttp";
 import Image from "next/image";
 import { IProfileIcon } from "../type/profileIcon";
 import ModalEditProfile from "../components/Modals/ModalEditProfile";
 import { authStore } from "../store/authStore";
 import { useShallow } from "zustand/shallow";
-import Loading from "../components/Loading/Loading";
-import { div } from "motion/react-client";
+import { getProfileIconByIdHttp, getProfileIconByUserIdHttp } from "../http/profileIconsHttp";
 
 export default function AccountPage() {
   const [profileIcon, setProfileIcon] = useState<IProfileIcon | null | Partial<IProfileIcon>>(null)
@@ -20,27 +19,28 @@ export default function AccountPage() {
 
 
   const getProfileIcon = async () => {
-    if (logedUser) {
-      const users = await getUsersHttp()
-      const userDatabase = users?.find(u => logedUser.id === u.id)
+    const logedUserId = Number(localStorage.getItem("logedUser"))
+    const profileIcon = await getProfileIconByUserIdHttp(logedUserId)
 
-      if (!userDatabase) {
-        console.log("User database not founded in 'getProfileIcon'")
-        return;
-      }
-      
-      if (!userDatabase.profileIcon) {
-        console.log("User haven't profile icon in 'getProfileIcon'")
-        return;
-      }
-
-      setProfileIcon(userDatabase?.profileIcon)
+    if (!profileIcon) {
+      console.log("profileIcon was not found")
+      return
     }
+
+    setProfileIcon(profileIcon)
   }
 
   useEffect(() => {
     getProfileIcon()
   }, [logedUser])
+
+  const handleEditProfile = () => {
+    if (!logedUser?.address) {
+      console.log("Address was not founded")
+    } else {
+      setIsEditProfil(true)
+    }
+  }
 
   if (!logedUser) {
     return (
@@ -58,14 +58,6 @@ export default function AccountPage() {
     )
   }
 
-  if (!profileIcon) {
-    return (
-      <div className="h-[80vh] w-full flex items-center justify-center">
-        <Loading/>
-      </div>
-    )
-  }
-
   return (
     <div className="h-screen px-88 pt-16">
       <div className="h-1/3 flex flex-col items-center gap-8">
@@ -77,7 +69,12 @@ export default function AccountPage() {
           ? <h3 className="text-xl font-normal">{logedUser.name} {logedUser.lastname}</h3>
           : <p>undefined</p>
         }
-        <button className="border-1 border-[var(--darkgreen)] py-1 px-4 hover:cursor-pointer" onClick={() => setIsEditProfil(true)}>Editar Perfil</button>
+        <button
+        className="border-1 border-[var(--darkgreen)] py-1 px-4 hover:cursor-pointer"
+        onClick={handleEditProfile}
+        >
+          Editar Perfil
+        </button>
       </div>
 
       {isEditProfile && logedUser &&

@@ -5,19 +5,18 @@ import React from 'react'
 import Carrousel from './components/Carrousel'
 import { useRouter } from 'next/navigation'
 
-export default function LandingPage() {
-  const buttonStyle = 'absolute top-2/5 right-50 bg-linear-to-b from-[var(--darkgreen)] to-[var(--green)] font-semibold w-42 h-12 text-2xl hover:scale-104 duration-300 cursor-pointer'
-  
+export default function LandingPage() {  
   const navigate = useRouter()
   
   return (
     <div className='flex flex-col items-center gap-24'>
       <div className='relative'>
         <Image src="/mujer-escuchando-musica-modified.png" alt="Girl listening music" width={1920} height={720}/>
-        <div className='absolute top-30 left-20 text-5xl flex flex-col text-white hover:scale-103 duration-300'>
+        <div className='absolute w-[55%] top-10 left-20 text-lg flex flex-col text-white duration-300
+        hover:scale-103 2xl:text-5xl xl:text-4xl lg:top-20 xl:top-30 lg:text-3xl md:text-2xl'
+        >
           <h2 className='flex gap-4 cursor-default'><span className='font-bold'>ESCUCHA</span> MÚSICA Y JUEGA</h2>
-          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>CON</span> LA MEJOR C
-          ALIDAD DE SONIDO</h2>
+          <h2 className='flex gap-4 cursor-default'><span className='font-bold'>CON</span> LA MEJOR CALIDAD DE SONIDO</h2>
         </div>
       </div>
       
@@ -31,14 +30,23 @@ export default function LandingPage() {
         <span className='font-semibold'>Tecnología</span> de cancelación de ruido
       </h2>
 
-      <div className='relative h-160 w-full' style={{background: 'linear-gradient(to right, #111111 55%, #262626)'}}>
-        <Image src="/blackshark2.png" alt='auriculares blackshark' width={800} height={800} className='absolute left-50' />
-        <div className='absolute w-fit right-50 top-1/4 -translate-y-1/2 text-white gap-6 hover:scale-104 duration-300 cursor-default'>
-          <h3 className='text-4xl'><span className='font-bold'>Alta</span> calidad de sonido</h3>
-          <h3 className='text-4xl'><span className='font-bold'>Sin</span> ruidos externos</h3>
+      <div className='relative h-160 w-full bg-[#111111]
+      flex flex-col justify-center items-center gap-4 lg:flex-row'
+      >
+        <picture className='h-1/2 w-fit lg:h-[80%] xl:h-full'>
+          <img src="/blackshark2.png" alt="blackshark v2" className='h-full'/>
+        </picture>
+        <div className='flex flex-col gap-2 items-center'>
+          <div className='text-white gap-6 hover:scale-104 duration-300 cursor-default'>
+            <h3 className='text-4xl'><span className='font-bold'>Alta</span> calidad de sonido</h3>
+            <h3 className='text-4xl'><span className='font-bold'>Sin</span> ruidos externos</h3>
+          </div>
+          <button className='bg-linear-to-b from-[var(--darkgreen)] to-[var(--green)] font-semibold w-42 h-12 text-2xl
+          hover:scale-104 duration-300 cursor-pointer' onClick={() => navigate.push("/featured_product")}
+          >
+            VISITAR
+          </button>
         </div>
-
-        <button className={buttonStyle} onClick={() => navigate.push("/featured_product")}>VISITAR</button>
       </div>
     </div>
   );
