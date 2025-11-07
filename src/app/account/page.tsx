@@ -1,13 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getUserByIdHttp, getUsersHttp } from "../http/userHttp";
 import Image from "next/image";
 import { IProfileIcon } from "../type/profileIcon";
 import ModalEditProfile from "../components/Modals/ModalEditProfile";
 import { authStore } from "../store/authStore";
 import { useShallow } from "zustand/shallow";
-import { getProfileIconByIdHttp, getProfileIconByUserIdHttp } from "../http/profileIconsHttp";
+import { getProfileIconByUserIdHttp } from "../http/profileIconsHttp";
 
 export default function AccountPage() {
   const [profileIcon, setProfileIcon] = useState<IProfileIcon | null | Partial<IProfileIcon>>(null)
@@ -16,7 +15,6 @@ export default function AccountPage() {
   const { logedUser } = authStore(useShallow((state) => ({
     logedUser: state.logedUser,
   })))
-
 
   const getProfileIcon = async () => {
     const logedUserId = Number(localStorage.getItem("logedUser"))

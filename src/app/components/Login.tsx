@@ -3,6 +3,9 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import { useUser } from '../hooks/useUser';
 import Loading from './Loading/Loading';
+import UserIcon from '@/svg/user-circle-svgrepo-com.svg'
+import CancelButton from './CancelButton';
+import AcceptButton from './AcceptButton';
 
 type LoginProps = {
     openModal: (el: boolean) => void
@@ -40,32 +43,39 @@ export const Login: FC<LoginProps> = ({ openModal }) => {
 
   return (
     <>
-        <form onSubmit={formik.handleSubmit}
-        className='absolute z-50 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 border-1 bg-[var(--darkgray)] p-8 flex flex-col justify-center items-center gap-4'
+        <form onSubmit={formik.handleSubmit} className='absolute z-50 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-86 bg-[var(--darkgray)]
+        px-12 py-10 shadow-xl flex flex-col justify-center items-center gap-10'
         >
-            Login
-            <input
-            name="email"
-            type="text"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Ingresa tu email'
-            className='h-8 bg-[var(--gray)] pl-4 text-sm'
-            />
-            <input
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder='Ingresa tu contraseña'
-            className='h-8 bg-[var(--gray)] pl-4 text-sm'
-            />
-            <div className='flex gap-10 '>
-                <button onClick={() => openModal(false)} className='hover:cursor-pointer'>Cancelar</button>
-                <button id='myButton' type='submit' className='hover:cursor-pointer'>Aceptar</button>
-            </div>
+            <UserIcon className="w-10 h-10 stroke-neutral-400"/>
 
-            
+            <div className='flex flex-col gap-6 w-full mb-6'>
+                <label className='flex flex-col'>
+                    Correo:
+                    <input
+                    name="email"
+                    type="text"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    placeholder='Ingresa tu email'
+                    className='h-8 bg-[var(--gray)] pl-2 text-sm'
+                    />
+                </label>
+                <label className='flex flex-col'>
+                    Contraseña:                            
+                    <input
+                    name="password"
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    placeholder='Ingresa tu contraseña'
+                    className='h-8 bg-[var(--gray)] pl-2 text-sm'
+                    />
+                </label>
+            </div>
+            <div className='w-full flex justify-between'>
+                <CancelButton openModal={openModal} />
+                <AcceptButton />
+            </div> 
         </form>
 
         {isLogin &&
