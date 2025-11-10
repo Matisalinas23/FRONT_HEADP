@@ -1,4 +1,8 @@
-import axios from 'axios'
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
+
+interface AxiosRequestConfig extends InternalAxiosRequestConfig {
+    _retry?: boolean
+}
 
 const api = axios.create({
     baseURL: 'http://localhost:3000',
@@ -15,8 +19,8 @@ api.interceptors.request.use(config => {
     return config
 })
 
-api.interceptors.response.use(response => response, async error => {
-        const originalRequest = error.config
+api.interceptors.response.use((response) => response, async (error: AxiosError) => {
+        const originalRequest = error.config as AxiosRequestConfig
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             console.log("condition aproved")
@@ -30,9 +34,10 @@ api.interceptors.response.use(response => response, async error => {
                 originalRequest.headers.Authorization = `Bearer ${newToken}`
 
                 return api(originalRequest)
-            } catch (refreshError: any) {
-                const status = refreshError.response?.status;
-                const message = refreshError.response?.data?.message;
+            } catch (refreshError) {
+                const axiosError  = refreshError as AxiosError<{ message?: string }>
+                const status = axiosError.response?.status;
+                const message = axiosError.response?.data?.message;
 
                 if (status === 403 && message === 'Invalid or expired refresh token') {
                     localStorage.removeItem('token');

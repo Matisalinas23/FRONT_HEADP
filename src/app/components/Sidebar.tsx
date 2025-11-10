@@ -8,6 +8,7 @@ import { IProduct } from '../type/product'
 import categoryStore from '../store/categoryStore'
 import { getProductsByCategoriesHttp, getProductsByPriceRangeHttp } from '../http/productsHttp'
 import { ICategory } from '../type/category'
+import Loading from './Loading/Loading'
 
 
 type SidebarProps = {
@@ -16,6 +17,7 @@ type SidebarProps = {
 
 export default function Sidebar({ setProducts }: SidebarProps) {
   const [checkedCategoryIds, setCheckedCategoryIds] = useState<number[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const searchParams = useSearchParams()
   const { getCategories } = useCategories()
@@ -25,6 +27,7 @@ export default function Sidebar({ setProducts }: SidebarProps) {
 
   useEffect(() => {
     getCategories()
+    setIsLoading(false)
   }, [])
 
   useEffect(() => {
@@ -40,7 +43,6 @@ export default function Sidebar({ setProducts }: SidebarProps) {
     }
   }, [categoryParam, categories])
 
-  // 🖱️ 3️⃣ Checkbox handler
   async function handleCheck(e: ChangeEvent<HTMLInputElement>, categoryId: number) {
     const isChecked = e.target.checked
     const newChecked = isChecked
@@ -55,7 +57,6 @@ export default function Sidebar({ setProducts }: SidebarProps) {
     setProducts(filteredProducts)
   }
 
-  // 💰 4️⃣ Filtro por precio (igual que antes)
   const formik = useFormik({
     initialValues: {
       minPrice: "",
@@ -67,27 +68,29 @@ export default function Sidebar({ setProducts }: SidebarProps) {
     }
   })
 
-  // 🧱 5️⃣ Render
   return (
     <div className='h-full w-80 px-12 pt-4 bg-[var(--background)] flex flex-col items-center'>
       <div className='border-b-2 w-full pb-6 border-[var(--gray)] flex flex-col items-center'>
         <h3 className='text-xl font-light w-fit mb-6'>Filtrar por categorías</h3>
 
         <div className='flex flex-col'>
-          {categories.map((category: ICategory) => (
-            <label
-              key={category.id}
-              className='text-lg font-light mb-1 flex flex-row items-center cursor-pointer duration-150 hover:scale-110'
-            >
-              <input
-                type="checkbox"
-                checked={checkedCategoryIds.includes(category.id!)}
-                onChange={(e) => handleCheck(e, category.id!)}
-                className='appearance-none rounded-full w-3 h-3 mr-2 bg-[var(--gray)] checked:bg-[var(--darkgreen)] cursor-pointer'
-              />
-              {category.name}
-            </label>
-          ))}
+          {isLoading
+            ? <Loading/>
+            : categories.map((category: ICategory) => (
+                <label
+                  key={category.id}
+                  className='text-lg font-light mb-1 flex flex-row items-center cursor-pointer duration-150 hover:scale-110'
+                >
+                  <input
+                    type="checkbox"
+                    checked={checkedCategoryIds.includes(category.id!)}
+                    onChange={(e) => handleCheck(e, category.id!)}
+                    className='appearance-none rounded-full w-3 h-3 mr-2 bg-[var(--gray)] checked:bg-[var(--darkgreen)] cursor-pointer'
+                  />
+                  {category.name}
+                </label>
+              ))
+          }
         </div>
       </div>
 

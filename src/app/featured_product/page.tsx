@@ -5,7 +5,6 @@ import Image from 'next/image'
 import FeaturedProductsBanner from '../components/FeaturedProductsBanner'
 import FeaturedProductSpecifies from '../components/FeaturedProductSpecifies'
 import { useRouter } from 'next/navigation'
-import { getProductByName, getProductsHttp } from '../http/productsHttp'
 
 export default function FeaturedProduct() {
   const buttonStyle = 'border-2 w-100 h-14 text-[var(--darkgreen)] cursor-pointer ease-in-out duration-300 hover:scale-103 hover:bg-[var(--darkgreen)] hover:text-white hover:border-none hover:font-normal'

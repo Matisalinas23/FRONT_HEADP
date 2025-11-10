@@ -1,6 +1,5 @@
 'use client'
 
-import productStore from '@/app/store/productStore'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import ModalAddToCart from '@/app/components/Modals/ModalAddToCart'

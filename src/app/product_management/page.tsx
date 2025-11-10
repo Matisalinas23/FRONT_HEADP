@@ -10,7 +10,6 @@ import ModalDeleteCategory from "../components/Modals/ModalDeleteCategory"
 import Product from "../components/Product"
 import ModalCreateProduct from "../components/Modals/ModalCreateProduct"
 import NoAdminScreen from "../components/NoAdminScreen"
-import Loading from "../components/Loading/Loading"
 
 export default function ProductManagement() {
   const [products, setProducts] = useState<IProduct[]>([])
