@@ -131,10 +131,10 @@ export default function BuyProduct() {
         </div>
       </div>
 
-      <div className="h-[2px] w-full py-4 border-t-1 border-neutral-500">
-          <div className='bg-[var(--darkgray)] rounded-xl p-4'>
+      <div className="w-full py-4 border-t-1 border-neutral-500">
+          <div className='bg-[var(--darkgray)] rounded-xl p-4 flex flex-col gap-y-4'>
             <h3 className='text-lg'>Descripcion:</h3>
-            <p className='text-neutral-400'>
+            <p className='max-h-100 overflow-y-auto text-neutral-400 whitespace-pre-line'>
               {product && product.description}
             </p>
           </div>

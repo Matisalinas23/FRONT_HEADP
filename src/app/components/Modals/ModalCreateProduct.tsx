@@ -87,7 +87,7 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
       <h3 className="text-2xl font-semibold mb-2">Crear Producto</h3>
 
       <div className="flex mb-4"> {/* Form content box */}
-        <div className="w-80 flex flex-col gap-6 pr-4 mr-8"> { /* Left half of form */ }
+        <div className="w-100 flex flex-col items-center gap-6 pr-4 mr-8"> { /* Left half of form */ }
           <input
           type="text" value={formik.values.name} onChange={formik.handleChange} placeholder="Nombre del producto"
           className={inputStyle} name="name"
@@ -102,12 +102,12 @@ export default function ModalCreateProduct({ openModal, categories, getProducts 
           />
           <div className="w-full p-1 pr-2 bg-[var(--lightgray)] mt-2">
             <textarea value={formik.values.description} onChange={formik.handleChange} placeholder="Descripción del producto"
-            className="w-full h-30 pl-2 pr-1" name="description"
+            className="w-full h-50 pl-2 pr-1" name="description"
             />
           </div> { /* Textarea for description of product */ }
         </div> { /* Left half of form */ }
 
-        <div className="w-48 flex flex-col gap-8">
+        <div className="w-48 flex flex-col items-center gap-8">
           <CategoryList categories={categories} formik={formik}/>
           <ImageSelector formik={formik}/>
         </div> {/* Right half of form */}

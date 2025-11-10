@@ -8,6 +8,7 @@ type DetailsViewProps = {
 }
 
 export default function DetailsView({ product, setOpenDetails }: DetailsViewProps) {
+    console.log("descripcion: ", product.description)
   return (
     <div className='absolute top-25 left-1/2 -translate-x-1/2 bg-[var(--darkgray)] w-160 h-132 px-20 pt-22 pb-10'>
             <h3 className='absolute top-6 w-120 flex justify-center text-xl mb-4 text-[var(--green)]'>{product.name}</h3>
@@ -15,7 +16,7 @@ export default function DetailsView({ product, setOpenDetails }: DetailsViewProp
 
                 <div className='h-30 flex items-center gap-8 mb-4'>
                     {product.image && <Image src={product.image.url} alt='productImage' height={120} width={120} />}
-                    <p className='max-h-full pr-4 overflow-y-auto'>{product.description}</p>
+                    <p className='max-h-full pr-4 overflow-y-auto whitespace-pre-line'>{product.description}</p>
                 </div>
 
                 <h3 className='mb-2'>Categorías</h3>

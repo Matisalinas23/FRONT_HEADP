@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IProduct } from '../type/product';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import { IUser } from '../type/user';
+import api from '../http/axios';
 
 interface Props {
   product: IProduct;
@@ -23,7 +23,7 @@ export const MercadoPagoWallet = ({ product, logedUser }: Props) => {
     const createPreferenceIdEndpoint = `${BASE_URL}/mpCheckouts/createPreferenceId`;
     const token = localStorage.getItem('token')
       try {
-        const response = await axios.post(
+        const response = await api.post(
           createPreferenceIdEndpoint,
           {
             title: product.name,
@@ -35,7 +35,7 @@ export const MercadoPagoWallet = ({ product, logedUser }: Props) => {
           { headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-           } }
+          }}
         );
 
         if (response.data.preferenceId) {
