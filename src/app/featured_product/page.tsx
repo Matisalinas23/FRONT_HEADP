@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import Image from 'next/image'
 import FeaturedProductsBanner from '../components/FeaturedProductsBanner'
 import FeaturedProductSpecifies from '../components/FeaturedProductSpecifies'
 import { useRouter } from 'next/navigation'
@@ -21,10 +20,12 @@ export default function FeaturedProduct() {
 
         <div className='h-60 w-full bg-gradient-to-b from-[ver(--darkgray)] to-[#232323]'></div>
 
-        <div className="h-200 bg-[#232323] flex items-start justify around px-16">
-          <Image src="/hombre-alegre-ponerse-auriculares.jpg" alt='hombre alegre' width={1000} height={200}/>
+        <div className="bg-[#232323] h-fit px-16 flex flex-col items-center gap-16 xl:flex-row xl:h-screen">
+          <picture>
+            <img src="/hombre-alegre-ponerse-auriculares.jpg" alt='hombre alegre' className='w-full xl:w-200 2xl:w-220'/>
+          </picture>
 
-          <div className='text-2xl text-[var(--green)] ml-12 mt-30'>
+          <div className='text-2xl flex-1 text-[var(--green)]'>
             <h2 className='text-4xl mb-6 text-[var(--darkgreen)]'><span className='font-bold'>Cambia</span> de modo transapencia a opacidad</h2>
             <p className='mb-1'>El modo tranparencia deja pasar el ruido de tu alrededor</p>
             <p className='mb-6'>para no perder la conexion con tu entorno</p>

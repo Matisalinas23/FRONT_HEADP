@@ -3,7 +3,7 @@ import api from './axios'
 import { IProduct } from "../type/product"
 import { ICategory } from "../type/category"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 const PRODUCT_URL = `${BASE_URL}/products`
 
 console.log('producturl: ', PRODUCT_URL)

@@ -4,10 +4,8 @@ interface AxiosRequestConfig extends InternalAxiosRequestConfig {
     _retry?: boolean
 }
 
-const baseurl = process.env.NEXT_PUBLIC_LOCAL_API_URL
-
 const api = axios.create({
-    baseURL: baseurl,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     withCredentials: true
 })
 
@@ -29,8 +27,7 @@ api.interceptors.response.use((response) => response, async (error: AxiosError) 
             originalRequest._retry = true
 
             try {
-                console.log("URL: ", process.env.NEXT_PUBLIC_LOCAL_API_URL, "/auth/refresh")
-                const res = await api.post(`${baseurl}/auth/refresh`, {}, { withCredentials: true })
+                const res = await api.post(`/auth/refresh`, {}, { withCredentials: true })
                 const newToken = res.data.accessToken
 
                 localStorage.setItem('token', newToken)

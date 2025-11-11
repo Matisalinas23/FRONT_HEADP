@@ -57,16 +57,15 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="h-screen px-88 pt-16">
-      <div className="h-1/3 flex flex-col items-center gap-8">
+    <div className="h-screen pt-16">
+      <div className="flex flex-col items-center gap-8">
         {profileIcon
           ? <Image src={profileIcon.url!} alt="profileIcon" width={180} height={180}/>
           : <Image src={"/default.png"} alt="profileIcon" width={180} height={180}/>
         }
-        {logedUser
-          ? <h3 className="text-xl font-normal">{logedUser.name} {logedUser.lastname}</h3>
-          : <p>undefined</p>
-        }
+
+        <h3 className="text-xl font-normal text-center">{logedUser.name} {logedUser.lastname}</h3>
+
         <button
         className="border-1 border-[var(--darkgreen)] py-1 px-4 hover:cursor-pointer"
         onClick={handleEditProfile}

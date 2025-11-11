@@ -1,7 +1,7 @@
 import api from './axios'
 import { IProfileIcon } from "../type/profileIcon";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 const PROFILE_ICON_URL = `${BASE_URL}/profile_icons`
 
 export const getAllProfileIconsHttp = async (): Promise<IProfileIcon[] | undefined> => {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { IUser } from "../type/user";
 import api from "./axios"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 const AUTH_URL = `${BASE_URL}/auth`
 
 console.log(AUTH_URL)

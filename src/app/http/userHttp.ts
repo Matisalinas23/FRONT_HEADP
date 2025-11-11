@@ -2,9 +2,8 @@ import axios from "axios"
 import api from './axios'
 import { IUser } from "../type/user";
 import { IAddress } from "../type/address";
-import { IProfileIcon } from "../type/profileIcon";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 const USER_URL = `${BASE_URL}/users`
 
 export const getUsersHttp = async (): Promise<IUser[] | undefined> => {
