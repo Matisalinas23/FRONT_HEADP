@@ -3,15 +3,16 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
 import productStore from '../store/productStore'
 import { IProduct } from '../type/product'
+import { authStore } from '../store/authStore'
+import { IUser } from '../type/user'
 
 export default function Searchbar() {
   const [activeSearch, setActiveSearch] = useState<string[]>([])
   const [value, setValue] = useState<string>('')
 
   const products: IProduct[] | [] = productStore(state => state.products)
-
+  const logedUser: IUser | null = authStore(state => state.logedUser)
   const navigate = useRouter()
-
   const words: string[] = products.map(p => p.name)
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {

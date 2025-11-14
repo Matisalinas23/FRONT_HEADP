@@ -40,9 +40,9 @@ export default function Navbar() {
       if (hasLoggedOut) return;
       
       hasLoggedOut = true
+      setLogedUser(null)
       alert("La sesión ha expirado, por favor, vuelve a iniciar sesión")
       navigate.push("/")
-      setLogedUser(null)
     }
 
     window.addEventListener("userLoggedOut", handleLogout);
@@ -98,19 +98,18 @@ export default function Navbar() {
         <div className="w-fit xl:flex-row flex flex-col items-center gap-4 gap-x-12">
           {logedUser && logedUser.type==="ADMIN"
             ?
-            <div className="flex gap-4">
-              <Link href="/product_management" className="text-[var(--green)]">Gestión de producto</Link>
-              <Link href="/logs" className="text-[var(--green)]">Registros</Link>
+            <div className="text-center text-[var(--green)] flex justify-center gap-4">
+              <Link href="/product_management" >Gestión de producto</Link>
+              <Link href="/logs" >Registros</Link>
+              <Link href="/register_admin" >Crear cuenta de admin </Link>
             </div>
             :
-            <>
             <div className="flex items-center gap-4 text-sm">
               <Link href={{ pathname: '/product_page', query: { category: 'Gaming' } }} className="text-[var(--green)]">GAMING</Link>
               <Link href={{ pathname: '/product_page', query: { category: 'IN-EAR' } }} className="text-[var(--green)]">INEAR</Link>
               <Link href={{ pathname: '/product_page', query: { category: 'ON-EAR' } }} className="text-[var(--green)]">ONEAR</Link>
               <Link href="/about" className="text-[var(--green)]">SOPORTE</Link>
             </div>
-            </>
           }
 
           <div className="flex w-80 xl:w-1/2 justify-center">
@@ -118,7 +117,7 @@ export default function Navbar() {
           </div>
         </div>
 
-      <div className="flex w-40 items-center gap-8 mr-4">
+      <div className="flex w-fit items-center gap-8 mr-4">
           { logedUser === null || logedUser && logedUser.type === "CLIENT" &&
             <CartiIcon className="h-8 min-w-8 max-w-8 stroke-[var(--darkgreen)] hover:cursor-pointer" onClick={handleCart} />
           }

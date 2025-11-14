@@ -14,9 +14,7 @@ import Loading from '@/app/components/Loading/Loading'
 
 export default function BuyProduct() {
   // Local states
-  const [isReceipt, setIsReceipt] = useState<boolean>(true)
   const [isModalAddToCart, setIsModalAddToCart] = useState<boolean>(false)
-  const [isModalBuy, setIsModalBuy] = useState<boolean>(false)
   const [product, setProduct] = useState<IProduct | undefined>(undefined)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
@@ -120,12 +118,6 @@ export default function BuyProduct() {
           {isModalAddToCart &&
             <div className='fixed inset-0 h-screen w-screen bg-[var(--background)]/50 flex items-center justify-center'>
               <ModalAddToCart product={product} openModal={setIsModalAddToCart} />
-            </div>
-          }
-
-          {isModalBuy &&
-            <div className='fixed inset-0 h-screen w-screen bg-[var(--background)]/50 flex items-center justify-center'>
-              <ModalBuyProduct openModal={setIsModalBuy} setIsReceipt={setIsReceipt} isReceipt={isReceipt} product={product}/>
             </div>
           }
         </div>

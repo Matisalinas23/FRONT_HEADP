@@ -15,5 +15,4 @@ export interface IUser {
     type?: Enum
     address?: IAddress | null,
     profileIcon?: IProfileIcon | null,
-    purchaseOrders: IPurchaseOrder[]
 }
