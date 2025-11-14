@@ -1,4 +1,3 @@
-import { IPurchaseOrder } from "./purchaseOrder";
 import { IUser } from "./user";
 
 export interface IAddress {
@@ -9,5 +8,4 @@ export interface IAddress {
     country: string;
     userId?: number; // Foreign key to User
     user?: IUser; // Optional relationship with User
-    purchaseOrders?: IPurchaseOrder[]; // One-to-many relationship with PurchaseOrder
 }

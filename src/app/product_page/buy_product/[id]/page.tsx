@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import ModalAddToCart from '@/app/components/Modals/ModalAddToCart'
-import ModalBuyProduct from '@/app/components/Modals/ModalBuyProduct'
 import { MercadoPagoWallet } from '@/app/components/MpCheckouts'
 import { authStore } from '@/app/store/authStore'
 import { useUser } from '@/app/hooks/useUser'

@@ -1,6 +1,5 @@
 import { IAddress } from "./address";
 import { IProfileIcon } from "./profileIcon";
-import { IPurchaseOrder } from "./purchaseOrder";
 
 type Enum = "CLIENT" | "ADMIN"
 

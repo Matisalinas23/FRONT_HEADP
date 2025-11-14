@@ -1,10 +1,11 @@
 "use client"
 
 import { useFormik } from 'formik'
-import { RegisterForm } from '../register/page'
+
 import { IUser } from '../type/user'
 import { useRouter } from 'next/navigation'
 import { registerUserHttp } from '../http/auth'
+import { RegisterForm } from '../components/RegisterForm'
 
 
 interface IFormik {
@@ -21,7 +22,7 @@ interface IFormik {
   type?: "ADMIN" | "CLIENT" | undefined;
 }
 
-export default function page() {
+export default function RegisterAdminPage() {
   const navigate = useRouter()
 
   const formik = useFormik<IFormik>({
