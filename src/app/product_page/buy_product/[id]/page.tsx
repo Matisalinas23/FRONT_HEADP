@@ -69,11 +69,11 @@ export default function BuyProduct() {
   }
 
   return (
-    <div className='px-90 py-16'>
-      <div className='min-h-86 w-full mb-6 flex items-center justify-between gap-12'>
-        <div className='min-w-130 h-full bg-white flex justify-center items-center'>
+    <div className='px-30 py-16 xl:px-60 2xl:px-90'>
+      <div className=' min-h-86 mb-6 flex flex-col items-center justify-center gap-12 lg:flex-row 2xl:gap-24'> 
+        <picture className='min-w-60 h-full bg-neutral-300 flex justify-center items-center'>
           {product.image && <Image src={product.image.url} alt='product image' width={340} height={340} />}
-        </div>
+        </picture>
 
         <div className='border max-w-190 min-h-80 h-fit bg-[var(--darkgray)] py-4 px-8'>
           <h3 className='text-xl font-bold mb-10'>{product.name}</h3>
@@ -96,7 +96,7 @@ export default function BuyProduct() {
               </div>
             </div>
 
-            <div className='min-w-60'>
+            <div className=''>
               <div className='flex flex-col justify-between mb-4'>
                 <p className='mb-4'>Stock disponible: {product.stock}</p>
                 <p>Llega en: {logedUser && logedUser.address && countries.includes(logedUser.address!.country) ? '24-48 horas' : '48-96 horas'}</p>
@@ -104,7 +104,7 @@ export default function BuyProduct() {
               
               <button
                 disabled={ !logedUser && true}
-                className='w-full h-9 mb-2 duration-200 bg-[var(--background)] cursor-pointer hover:scale-103'
+                className='w-full h-9 mb-2  duration-200 bg-[var(--background)] cursor-pointer hover:scale-103'
                 onClick={() => setIsModalAddToCart(true)}
               >
                 Añadir al carrito

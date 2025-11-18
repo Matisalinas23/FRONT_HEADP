@@ -54,7 +54,7 @@ export const MercadoPagoWallet = ({ product, logedUser }: Props) => {
       <button
         disabled={ !logedUser && true}
         onClick={createPreferenceId}
-        className="w-full h-8 font-light bg-[var(--darkgreen)] cursor-pointer duration-200 hover:scale-103"
+        className="w-full min-h-9 px-1 font-light bg-[var(--darkgreen)] cursor-pointer duration-200 hover:scale-103"
       >
         Pagar Con Mercado Pago
       </button>
