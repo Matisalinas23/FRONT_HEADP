@@ -56,7 +56,9 @@ export default function BuyProduct() {
   
   if (!isLoaded) {
     return (
-      <Loading/>
+      <div className='h-86 flex items-center justify-center pt-20'>
+        <Loading/>
+      </div>
     )
   }
 

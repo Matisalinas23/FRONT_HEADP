@@ -19,10 +19,8 @@ export const createCartItemHttp = async (quantity: number, userId: number, produ
 
 export const getCartItemsHttp = async (userId: number): Promise<ICartItem[] | undefined> => {
     try {
-        const token = localStorage.getItem('token')
         const response = await api.get(
             `${CART_ITEMS_URL}/${userId}`,
-            { headers: { Authorization: `Bearer: ${token}` }}
         )
 
         return response.data;
@@ -31,3 +29,10 @@ export const getCartItemsHttp = async (userId: number): Promise<ICartItem[] | un
     }
 }
 
+export const deleteCartItemHttp = async (id: number): Promise<void> => {
+    try {
+        await api.delete(`${CART_ITEMS_URL}/${id}`)
+    } catch (error) {
+        console.log("There was an error on deleteCartItemHttp ", error)
+    }
+}

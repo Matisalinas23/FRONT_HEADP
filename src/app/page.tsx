@@ -26,7 +26,7 @@ export default function LandingPage() {
 
       <Carrousel />
 
-      <h2 className='text-5xl text-[var(--green)] cursor-default duration-200 hover:scale-103'>
+      <h2 className='text-5xl px-12 text-center text-[var(--green)] cursor-default duration-200 hover:scale-103'>
         <span className='font-semibold'>Tecnología</span> de cancelación de ruido
       </h2>
 
