@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { IUser } from '@/app/type/user'
 import Loading from '../Loading/Loading'
-import { div } from 'motion/react-client'
 
 type ModalCartProps = {
     logedUser: IUser

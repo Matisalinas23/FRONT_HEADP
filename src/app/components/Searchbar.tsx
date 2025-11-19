@@ -53,8 +53,6 @@ export default function Searchbar() {
           <AiOutlineSearch />
         </button>
       </div>
-
-      
     </form>
   )
 }
