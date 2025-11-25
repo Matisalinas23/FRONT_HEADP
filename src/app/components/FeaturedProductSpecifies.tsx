@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function FeaturedProductSpecifies() {
     return (
-        <div className='relative h-160 w-full xl:h-screen flex items-center justify-center border'>
+        <div className='relative h-160 w-full xl:h-screen flex items-center justify-center'>
             <p className='absolute left-6/10 top-2/10 text-lg text-[var(--green)] duration-100 cursor-default
             lg:left-5/9 xl:top-3/10 hover:scale-103'>
                 <span className='font-semibold'>Diadema</span> flexible, acolchada y aterciopelada

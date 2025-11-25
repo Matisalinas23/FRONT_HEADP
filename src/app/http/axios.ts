@@ -43,6 +43,7 @@ api.interceptors.response.use((response) => response, async (error: AxiosError) 
                     localStorage.removeItem('token');
                     localStorage.removeItem('logedUser');
                     window.dispatchEvent(new Event('userLoggedOut'));
+                    window.location.reload()
                 } else {
                     console.error('Error inesperado al refrescar token:', refreshError);
                 }
