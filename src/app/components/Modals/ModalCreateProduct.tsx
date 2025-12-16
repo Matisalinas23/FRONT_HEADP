@@ -28,7 +28,7 @@ export interface IFormValues {
 export default function ModalCreateProduct({ openModal, categories, getProducts }: CreateProductProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
-  const inputStyle = "bg-[var(--lightgray)] pl-2 h-7"
+  const inputStyle = "bg-[var(--lightgray)] w-full pl-2 h-7"
 
   const formik: FormikProps<IFormValues> = useFormik<IFormValues>({
     initialValues: {
