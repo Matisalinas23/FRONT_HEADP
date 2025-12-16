@@ -81,13 +81,13 @@ export default function ProductManagement() {
         </div>
 
         {/* Product List */}
-        <div className="flex flex-col">
+        <div className="w-200 flex flex-col items-center">
           <div className="min-h-60 pr-4 max-h-126 mb-6 overflow-y-auto flex flex-col gap-4">
             {products && products.map(p => <Product key={p.id} product={p} getProducts={getProducts}/>)}
           </div>
 
           <button
-          className="py-2 text-lg mr-4 font-normal bg-[var(--darkgreen)] hover:bg-[var(--green)] hover:font-semibold"
+          className="w-full py-2 text-lg font-normal bg-[var(--darkgreen)] hover:bg-[var(--green)] hover:font-semibold"
           onClick={() => setModalCreateProduct(true)}
           >
             Añadir Producto
