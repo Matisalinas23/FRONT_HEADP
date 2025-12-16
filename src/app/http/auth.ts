@@ -9,7 +9,6 @@ console.log(AUTH_URL)
 
 
 export const registerUserHttp = async (userData: IUser): Promise<{ token: string, userId: number } | undefined> => {
-    console.log("USER DATA: ", userData)
     try {
         const response = await axios.post(AUTH_URL + "/register", userData)
         return response.data;
@@ -19,7 +18,6 @@ export const registerUserHttp = async (userData: IUser): Promise<{ token: string
 }
 
 export const loginUserHttp = async (email: string, password: string) => {
-    console.log("LoginUserUrl: ", AUTH_URL + "/login")
     try {
         const response = await api.post(AUTH_URL + "/login", { email, password })
         localStorage.setItem('token', response.data.accessToken)
